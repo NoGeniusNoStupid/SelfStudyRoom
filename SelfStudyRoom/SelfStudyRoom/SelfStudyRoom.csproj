@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ImportDll\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -128,12 +132,17 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PowerController.cs" />
+    <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs">
       <DependentUpon>SelfStudyRoom.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DBContextFactory.cs" />
     <Compile Include="Models\Seat.cs">
       <DependentUpon>SelfStudyRoom.tt</DependentUpon>
     </Compile>
@@ -159,8 +168,62 @@
       <DependentUpon>SelfStudyRoom.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Public\MyExceptionAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Admin\css\style.css" />
+    <Content Include="Content\Admin\gulpfile.js" />
+    <Content Include="Content\Admin\images\dashboard\circle.svg" />
+    <Content Include="Content\Admin\images\dashboard\img_1.jpg" />
+    <Content Include="Content\Admin\images\dashboard\img_2.jpg" />
+    <Content Include="Content\Admin\images\dashboard\img_3.jpg" />
+    <Content Include="Content\Admin\images\dashboard\img_4.jpg" />
+    <Content Include="Content\Admin\images\faces-clipart\pic-1.png" />
+    <Content Include="Content\Admin\images\faces-clipart\pic-2.png" />
+    <Content Include="Content\Admin\images\faces-clipart\pic-3.png" />
+    <Content Include="Content\Admin\images\faces-clipart\pic-4.png" />
+    <Content Include="Content\Admin\images\faces\face1.jpg" />
+    <Content Include="Content\Admin\images\faces\face10.jpg" />
+    <Content Include="Content\Admin\images\faces\face11.jpg" />
+    <Content Include="Content\Admin\images\faces\face12.jpg" />
+    <Content Include="Content\Admin\images\faces\face13.jpg" />
+    <Content Include="Content\Admin\images\faces\face14.jpg" />
+    <Content Include="Content\Admin\images\faces\face15.jpg" />
+    <Content Include="Content\Admin\images\faces\face16.jpg" />
+    <Content Include="Content\Admin\images\faces\face17.jpg" />
+    <Content Include="Content\Admin\images\faces\face18.jpg" />
+    <Content Include="Content\Admin\images\faces\face19.jpg" />
+    <Content Include="Content\Admin\images\faces\face2.jpg" />
+    <Content Include="Content\Admin\images\faces\face20.jpg" />
+    <Content Include="Content\Admin\images\faces\face21.jpg" />
+    <Content Include="Content\Admin\images\faces\face22.jpg" />
+    <Content Include="Content\Admin\images\faces\face23.jpg" />
+    <Content Include="Content\Admin\images\faces\face24.jpg" />
+    <Content Include="Content\Admin\images\faces\face25.jpg" />
+    <Content Include="Content\Admin\images\faces\face26.jpg" />
+    <Content Include="Content\Admin\images\faces\face27.jpg" />
+    <Content Include="Content\Admin\images\faces\face3.jpg" />
+    <Content Include="Content\Admin\images\faces\face4.jpg" />
+    <Content Include="Content\Admin\images\faces\face5.jpg" />
+    <Content Include="Content\Admin\images\faces\face6.jpg" />
+    <Content Include="Content\Admin\images\faces\face7.jpg" />
+    <Content Include="Content\Admin\images\faces\face8.jpg" />
+    <Content Include="Content\Admin\images\faces\face9.jpg" />
+    <Content Include="Content\Admin\images\favicon.png" />
+    <Content Include="Content\Admin\images\logo-mini.svg" />
+    <Content Include="Content\Admin\images\logo.svg" />
+    <Content Include="Content\Admin\js\chart.js" />
+    <Content Include="Content\Admin\js\dashboard.js" />
+    <Content Include="Content\Admin\js\file-upload.js" />
+    <Content Include="Content\Admin\js\misc.js" />
+    <Content Include="Content\Admin\js\off-canvas.js" />
+    <Content Include="Content\Admin\vendors\css\vendor.bundle.base.css" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\css\materialdesignicons.css" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\css\materialdesignicons.min.css" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\fonts\materialdesignicons-webfont.svg" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\preview.html" />
+    <Content Include="Content\Admin\vendors\js\vendor.bundle.addons.js" />
+    <Content Include="Content\Admin\vendors\js\vendor.bundle.base.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -215,6 +278,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="error-404.html" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <EntityDeploy Include="Models\SelfStudyRoom.edmx">
@@ -234,6 +298,74 @@
       <DependentUpon>SelfStudyRoom.edmx</DependentUpon>
       <LastGenOutput>SelfStudyRoom.cs</LastGenOutput>
     </Content>
+    <Content Include="Content\Admin\css\maps\style.css.map" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Bold.eot" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Bold.ttf" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Bold.woff" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Bold.woff2" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Light.eot" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Light.ttf" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Light.woff" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Light.woff2" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Medium.eot" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Medium.ttf" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Medium.woff" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Medium.woff2" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Regular.eot" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Regular.ttf" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Regular.woff" />
+    <Content Include="Content\Admin\fonts\Ubuntu\Ubuntu-Regular.woff2" />
+    <Content Include="Content\Admin\package-lock.json" />
+    <Content Include="Content\Admin\package.json" />
+    <Content Include="Content\Admin\scss\components\_badges.scss" />
+    <Content Include="Content\Admin\scss\components\_bootstrap-progress.scss" />
+    <Content Include="Content\Admin\scss\components\_buttons.scss" />
+    <Content Include="Content\Admin\scss\components\_cards.scss" />
+    <Content Include="Content\Admin\scss\components\_checkbox-radio.scss" />
+    <Content Include="Content\Admin\scss\components\_dropdown.scss" />
+    <Content Include="Content\Admin\scss\components\_forms.scss" />
+    <Content Include="Content\Admin\scss\components\_icons.scss" />
+    <Content Include="Content\Admin\scss\components\_lists.scss" />
+    <Content Include="Content\Admin\scss\components\_preview.scss" />
+    <Content Include="Content\Admin\scss\components\_tables.scss" />
+    <Content Include="Content\Admin\scss\landing-screens\_auth.scss" />
+    <Content Include="Content\Admin\scss\mixins\_animation.scss" />
+    <Content Include="Content\Admin\scss\mixins\_background.scss" />
+    <Content Include="Content\Admin\scss\mixins\_badges.scss" />
+    <Content Include="Content\Admin\scss\mixins\_blockqoute.scss" />
+    <Content Include="Content\Admin\scss\mixins\_buttons.scss" />
+    <Content Include="Content\Admin\scss\mixins\_cards.scss" />
+    <Content Include="Content\Admin\scss\mixins\_misc.scss" />
+    <Content Include="Content\Admin\scss\style.scss" />
+    <Content Include="Content\Admin\scss\_background.scss" />
+    <Content Include="Content\Admin\scss\_demo.scss" />
+    <Content Include="Content\Admin\scss\_fonts.scss" />
+    <Content Include="Content\Admin\scss\_footer.scss" />
+    <Content Include="Content\Admin\scss\_functions.scss" />
+    <Content Include="Content\Admin\scss\_misc.scss" />
+    <Content Include="Content\Admin\scss\_navbar.scss" />
+    <Content Include="Content\Admin\scss\_reset.scss" />
+    <Content Include="Content\Admin\scss\_sidebar.scss" />
+    <Content Include="Content\Admin\scss\_typography.scss" />
+    <Content Include="Content\Admin\scss\_utilities.scss" />
+    <Content Include="Content\Admin\scss\_variables.scss" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\bower.json" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\css\materialdesignicons.css.map" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\css\materialdesignicons.min.css.map" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\fonts\materialdesignicons-webfont.eot" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\fonts\materialdesignicons-webfont.ttf" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\fonts\materialdesignicons-webfont.woff" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\license.md" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\package.json" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\scss\materialdesignicons.scss" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\scss\_animated.scss" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\scss\_core.scss" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\scss\_extras.scss" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\scss\_functions.scss" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\scss\_icons.scss" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\scss\_path.scss" />
+    <Content Include="Content\Admin\vendors\iconfonts\mdi\scss\_variables.scss" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -261,10 +393,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\UserInfo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

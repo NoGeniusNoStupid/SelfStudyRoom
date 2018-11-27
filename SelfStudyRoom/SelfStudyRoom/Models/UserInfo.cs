@@ -22,5 +22,8 @@ namespace SelfStudyRoom.Models
         public string Grade { get; set; }
         public string Dormitory { get; set; }
         public string Image { get; set; }
+        public string Tel { get; set; }
+        public string Email { get; set; }
+        public Nullable<System.DateTime> RegTime { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using SelfStudyRoom.Public;
+using System.Web;
 using System.Web.Mvc;
 
 namespace SelfStudyRoom
@@ -7,7 +8,7 @@ namespace SelfStudyRoom
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new MyExceptionAttribute());
         }
     }
 }

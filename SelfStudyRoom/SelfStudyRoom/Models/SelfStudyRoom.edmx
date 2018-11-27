@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SelfStudyRoomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SelfStudyRoomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="Id" />
@@ -52,6 +52,9 @@
           <Property Name="Grade" Type="varchar" MaxLength="10" />
           <Property Name="Dormitory" Type="varchar" MaxLength="20" />
           <Property Name="Image" Type="varchar" MaxLength="50" />
+          <Property Name="Tel" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="20" />
+          <Property Name="RegTime" Type="datetime" />
         </EntityType>
         <Association Name="FK_Seat_StuRoom">
           <End Role="StuRoom" Type="Self.StuRoom" Multiplicity="0..1">
@@ -77,8 +80,7 @@
             <End Role="Seat" EntitySet="Seat" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SelfStudyRoomModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -131,6 +133,9 @@
           <Property Name="Grade" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Dormitory" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RegTime" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_Seat_StuRoom">
           <End Role="StuRoom" Type="Self.StuRoom" Multiplicity="0..1">
@@ -203,6 +208,9 @@
           <EntitySetMapping Name="UserInfo">
             <EntityTypeMapping TypeName="SelfStudyRoomModel.UserInfo">
               <MappingFragment StoreEntitySet="UserInfo">
+                <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="StuNo" ColumnName="StuNo" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
