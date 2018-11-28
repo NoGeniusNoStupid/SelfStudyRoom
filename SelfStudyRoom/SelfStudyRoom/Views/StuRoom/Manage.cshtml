@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">
+            自习室管理
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">自习室管理</li>
+                <li class="breadcrumb-item"><a href="/StuRoom/Add">添加自习室</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+  
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    @*<h4 class="card-title">Bordered table</h4>
+                    <p class="card-description">
+                        Add class <code>.table-bordered</code>
+                    </p>*@
+                    <form method="post" action="/StuRoom/Manage">
+                        <div class="input-group">
+
+                            <div class="input-group-prepend bg-transparent">
+                                <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                            </div>
+                            <input name="search" type="text" class="form-control bg-transparent border-0" placeholder="根据自习室名称查询">
+                            <button type="submit" class="btn btn-gradient-success btn-fw">查询</button>
+
+                        </div>
+                    </form>
+                    <br />
+                    <br />
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    编号
+                                </th>
+                                <th>
+                                    自习室名称
+                                </th>
+                                <th>
+                                    使用情况（占用数/总数）
+                                </th>
+                                <th>
+                                    地址
+                                </th>
+                                <th>
+                                    空调
+                                </th>
+                                <th>
+                                    状态
+                                </th>
+                                <th>
+                                    添加时间
+                                </th>
+                                <th>
+                                    操作
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           @{
+                               List<SelfStudyRoom.Models.StuRoom> mlist = (List<SelfStudyRoom.Models.StuRoom>)ViewData["List"];
+
+                               foreach (var item in mlist)
+                               {
+                                   int num =Convert.ToInt32( item.SeatNum - item.Empty_Seat);
+                                   double percent = Convert.ToDouble(num) / Convert.ToDouble(item.SeatNum)*100;
+                                   <tr>
+                                       <td>@item.Id</td>
+                                       <td>@item.Name</td>
+                                       @if (num < item.SeatNum / 2)
+                                       {  
+                                       <td>
+                                           @num / @item.SeatNum
+                                         <div class="progress">
+                                             <div class="progress-bar bg-success" role="progressbar" style="width: @percent%" aria-valuenow="@num" aria-valuemin="0" aria-valuemax="@item.SeatNum"></div>
+                                         </div>
+                                           
+                                       </td>
+                                       }
+                                       else
+                                       {
+                                       <td>
+                                           @num / @item.SeatNum
+                                         <div class="progress">
+                                             <div class="progress-bar bg-danger" role="progressbar" style="width: @percent%" aria-valuenow="@num" aria-valuemin="0" aria-valuemax="@item.SeatNum"></div>
+                                         </div>
+                                       </td>
+                                       }
+                                       <td>@item.Addr</td>
+                                       <td>@item.IsAir</td>
+                                       <td>@item.State</td>
+                                       <td>@item.AddTime</td>
+                                       <td>
+                                           <a href="/StuRoom/Edit/@item.Id"  class="btn btn-gradient-info btn-fw">编辑</a>
+                                           <a href="/StuRoom/Delete/@item.Id" onclick=" return confirm('确定要删除吗?')" class="btn btn-gradient-danger btn-fw">删除</a>
+                                       </td>
+                                   </tr>
+                               
+                               }                           
+                           }
+                           
+                        </tbody>
+                    </table>
+                    <div style="float:right">@Html.Raw(ViewData["Bar"])</div>
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

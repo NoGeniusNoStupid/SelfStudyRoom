@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+@section scripts{
+    <script>
+        function addForm() {
+            var Name = document.getElementById("Name").value;
+            var SeatNum = document.getElementById("SeatNum").value;
+            var Addr = document.getElementById("Addr").value;
+            var form = document.getElementById("addform");
+            if (Name == "")
+            {
+                alert("请输入自习室名称");
+                return false;
+            }
+            if (SeatNum == "") {
+                alert("请输入座位数量");
+                return false;
+            }
+            var ival = parseInt(SeatNum);//如果变量val是字符类型的数则转换为int类型 如果不是则ival为NaN
+            if (isNaN(ival)) {
+                alert(SeatNum + "不是数字");
+                return false;
+            }
+            if (Math.round(SeatNum) != SeatNum) {
+                alert(SeatNum + "不是整数数字");
+                return false;
+            }
+            if (Addr == "") {
+                alert("请输入自习室地址");
+                return false;
+            }
+            
+            form.submit();
+        }
+    </script>
+    }
+
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">
+            
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/StuRoom/Manage">自习室管理</a></li>
+                <li class="breadcrumb-item active" aria-current="page">添加自习室</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div style="width:900px;margin-left:auto;margin-right:auto">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        @*<h4 class="card-title">Basic form elements</h4>
+                        <p class="card-description">
+                            Basic form elements
+                        </p>*@
+                        <form id="addform"  class="forms-sample" method="post" action="/StuRoom/Add">
+                            <div class="form-group">
+                                <label for="exampleInputName1">自习室名称</label>
+                                <input type="text" class="form-control" id="Name" name="Name" placeholder="自习室名称">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail3">座位数量</label>
+                                <input type="text" class="form-control" id="SeatNum" name="SeatNum" placeholder="座位数量">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword4">地址</label>
+                                <input type="text" class="form-control" id="Addr" name="Addr" placeholder="地址">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleSelectGender">空调</label>
+                                <select class="form-control" id="IsAir" name="IsAir">
+                                    <option value="有" selected="selected">有</option>
+                                    <option value="无">无</option>
+                                </select>
+                            </div>
+                            @*<div class="form-group">
+                                <label>File upload</label>
+                                <input type="file" name="img[]" class="file-upload-default">
+                                <div class="input-group col-xs-12">
+                                    <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                                    <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-gradient-primary" type="button">Upload</button>
+                                    </span>
+                                </div>
+                            </div>*@
+                            
+                            <div class="form-group">
+                                <label for="exampleTextarea1">详细介绍</label>
+                                <textarea class="form-control" id="Detail" name="Detail" rows="4"></textarea>
+                            </div>
+                            <div style="float:right">
+                                <button type="button" onclick="addForm()" class="btn btn-gradient-primary mr-2">提交</button>
+                                <button class="btn btn-light">重置</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+    </div>
+</div>
+
+

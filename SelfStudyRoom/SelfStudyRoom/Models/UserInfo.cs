@@ -14,6 +14,11 @@ namespace SelfStudyRoom.Models
     
     public partial class UserInfo
     {
+        public UserInfo()
+        {
+            this.SeatDetail = new HashSet<SeatDetail>();
+        }
+    
         public int Id { get; set; }
         public string StuNo { get; set; }
         public string Password { get; set; }
@@ -25,5 +30,7 @@ namespace SelfStudyRoom.Models
         public string Tel { get; set; }
         public string Email { get; set; }
         public Nullable<System.DateTime> RegTime { get; set; }
+    
+        public virtual ICollection<SeatDetail> SeatDetail { get; set; }
     }
 }

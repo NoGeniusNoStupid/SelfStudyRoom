@@ -132,9 +132,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PowerController.cs" />
+    <Compile Include="Controllers\SeatController.cs" />
+    <Compile Include="Controllers\SeatDetailController.cs" />
+    <Compile Include="Controllers\StuRoomController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -144,6 +148,9 @@
     </Compile>
     <Compile Include="Models\DBContextFactory.cs" />
     <Compile Include="Models\Seat.cs">
+      <DependentUpon>SelfStudyRoom.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SeatDetail.cs">
       <DependentUpon>SelfStudyRoom.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SelfStudyRoom.Context.cs">
@@ -169,6 +176,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Public\MyExceptionAttribute.cs" />
+    <Compile Include="Public\PageBarHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin\css\style.css" />
@@ -210,6 +218,7 @@
     <Content Include="Content\Admin\images\faces\face8.jpg" />
     <Content Include="Content\Admin\images\faces\face9.jpg" />
     <Content Include="Content\Admin\images\favicon.png" />
+    <Content Include="Content\Admin\images\login.png" />
     <Content Include="Content\Admin\images\logo-mini.svg" />
     <Content Include="Content\Admin\images\logo.svg" />
     <Content Include="Content\Admin\js\chart.js" />
@@ -396,6 +405,11 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\UserInfo\Index.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\StuRoom\Add.cshtml" />
+    <Content Include="Views\Shared\master.cshtml" />
+    <Content Include="Views\StuRoom\Manage.cshtml" />
+    <Content Include="Views\Seat\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

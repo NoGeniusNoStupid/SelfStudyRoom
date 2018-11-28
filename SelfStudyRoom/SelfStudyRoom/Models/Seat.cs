@@ -14,15 +14,20 @@ namespace SelfStudyRoom.Models
     
     public partial class Seat
     {
+        public Seat()
+        {
+            this.SeatDetail = new HashSet<SeatDetail>();
+        }
+    
         public int Id { get; set; }
         public Nullable<int> RoomId { get; set; }
         public string SeatNo { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
+        public Nullable<System.DateTime> StartTime { get; set; }
+        public Nullable<System.DateTime> EndTime { get; set; }
         public string SeatSave { get; set; }
-        public string Location { get; set; }
         public string State { get; set; }
     
         public virtual StuRoom StuRoom { get; set; }
+        public virtual ICollection<SeatDetail> SeatDetail { get; set; }
     }
 }

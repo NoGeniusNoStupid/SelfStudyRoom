@@ -21,11 +21,21 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoomId" Type="int" />
           <Property Name="SeatNo" Type="varchar" MaxLength="20" />
-          <Property Name="StartTime" Type="nchar" MaxLength="10" />
-          <Property Name="EndTime" Type="nchar" MaxLength="10" />
-          <Property Name="SeatSave" Type="nchar" MaxLength="10" />
-          <Property Name="Location" Type="nchar" MaxLength="10" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="SeatSave" Type="varchar" MaxLength="2" />
           <Property Name="State" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="SeatDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SeatId" Type="int" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="State" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="StuRoom">
           <Key>
@@ -36,9 +46,10 @@
           <Property Name="SeatNum" Type="int" />
           <Property Name="Empty_Seat" Type="int" />
           <Property Name="Addr" Type="varchar" MaxLength="20" />
-          <Property Name="IsAir" Type="varchar" MaxLength="1" />
+          <Property Name="IsAir" Type="varchar" MaxLength="10" />
           <Property Name="State" Type="varchar" MaxLength="10" />
           <Property Name="AddTime" Type="datetime" />
+          <Property Name="Detail" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="UserInfo">
           <Key>
@@ -70,14 +81,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SeatDetail_Seat">
+          <End Role="Seat" Type="Self.Seat" Multiplicity="0..1" />
+          <End Role="SeatDetail" Type="Self.SeatDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SeatDetail">
+              <PropertyRef Name="SeatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeatDetail_UserInfo">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
+          <End Role="SeatDetail" Type="Self.SeatDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SeatDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="SelfStudyRoomModelStoreContainer">
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seat" EntityType="Self.Seat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeatDetail" EntityType="Self.SeatDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StuRoom" EntityType="Self.StuRoom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Seat_StuRoom" Association="Self.FK_Seat_StuRoom">
             <End Role="StuRoom" EntitySet="StuRoom" />
             <End Role="Seat" EntitySet="Seat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeatDetail_Seat" Association="Self.FK_SeatDetail_Seat">
+            <End Role="Seat" EntitySet="Seat" />
+            <End Role="SeatDetail" EntitySet="SeatDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeatDetail_UserInfo" Association="Self.FK_SeatDetail_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="SeatDetail" EntitySet="SeatDetail" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -100,12 +144,12 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoomId" Type="Int32" />
           <Property Name="SeatNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="StartTime" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="EndTime" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="SeatSave" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Location" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="StartTime" Type="DateTime" />
+          <Property Name="EndTime" Type="DateTime" />
+          <Property Name="SeatSave" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="StuRoom" Relationship="Self.FK_Seat_StuRoom" FromRole="Seat" ToRole="StuRoom" />
+          <NavigationProperty Name="SeatDetail" Relationship="SelfStudyRoomModel.FK_SeatDetail_Seat" FromRole="Seat" ToRole="SeatDetail" />
         </EntityType>
         <EntityType Name="StuRoom">
           <Key>
@@ -116,10 +160,11 @@
           <Property Name="SeatNum" Type="Int32" />
           <Property Name="Empty_Seat" Type="Int32" />
           <Property Name="Addr" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IsAir" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IsAir" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="State" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="AddTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Seat" Relationship="Self.FK_Seat_StuRoom" FromRole="StuRoom" ToRole="Seat" />
+          <Property Name="Detail" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="UserInfo">
           <Key>
@@ -136,6 +181,7 @@
           <Property Name="Tel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="RegTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="SeatDetail" Relationship="SelfStudyRoomModel.FK_SeatDetail_UserInfo" FromRole="UserInfo" ToRole="SeatDetail" />
         </EntityType>
         <Association Name="FK_Seat_StuRoom">
           <End Role="StuRoom" Type="Self.StuRoom" Multiplicity="0..1">
@@ -160,7 +206,53 @@
             <End Role="StuRoom" EntitySet="StuRoom" />
             <End Role="Seat" EntitySet="Seat" />
           </AssociationSet>
+          <EntitySet Name="SeatDetail" EntityType="SelfStudyRoomModel.SeatDetail" />
+          <AssociationSet Name="FK_SeatDetail_Seat" Association="SelfStudyRoomModel.FK_SeatDetail_Seat">
+            <End Role="Seat" EntitySet="Seat" />
+            <End Role="SeatDetail" EntitySet="SeatDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeatDetail_UserInfo" Association="SelfStudyRoomModel.FK_SeatDetail_UserInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="SeatDetail" EntitySet="SeatDetail" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="SeatDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SeatId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Seat" Relationship="SelfStudyRoomModel.FK_SeatDetail_Seat" FromRole="SeatDetail" ToRole="Seat" />
+          <NavigationProperty Name="UserInfo" Relationship="SelfStudyRoomModel.FK_SeatDetail_UserInfo" FromRole="SeatDetail" ToRole="UserInfo" />
+        </EntityType>
+        <Association Name="FK_SeatDetail_Seat">
+          <End Type="SelfStudyRoomModel.Seat" Role="Seat" Multiplicity="0..1" />
+          <End Type="SelfStudyRoomModel.SeatDetail" Role="SeatDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SeatDetail">
+              <PropertyRef Name="SeatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeatDetail_UserInfo">
+          <End Type="SelfStudyRoomModel.UserInfo" Role="UserInfo" Multiplicity="0..1" />
+          <End Type="SelfStudyRoomModel.SeatDetail" Role="SeatDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SeatDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -186,7 +278,6 @@
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="SeatSave" ColumnName="SeatSave" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="State" ColumnName="State" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -194,6 +285,7 @@
           <EntitySetMapping Name="StuRoom">
             <EntityTypeMapping TypeName="SelfStudyRoomModel.StuRoom">
               <MappingFragment StoreEntitySet="StuRoom">
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="SeatNum" ColumnName="SeatNum" />
@@ -219,6 +311,18 @@
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="Dormitory" ColumnName="Dormitory" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeatDetail">
+            <EntityTypeMapping TypeName="SelfStudyRoomModel.SeatDetail">
+              <MappingFragment StoreEntitySet="SeatDetail">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SeatId" ColumnName="SeatId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

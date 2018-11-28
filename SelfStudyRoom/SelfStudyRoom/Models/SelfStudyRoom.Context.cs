@@ -29,5 +29,6 @@ namespace SelfStudyRoom.Models
         public DbSet<Seat> Seat { get; set; }
         public DbSet<StuRoom> StuRoom { get; set; }
         public DbSet<UserInfo> UserInfo { get; set; }
+        public DbSet<SeatDetail> SeatDetail { get; set; }
     }
 }

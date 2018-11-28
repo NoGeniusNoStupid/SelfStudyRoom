@@ -12,23 +12,16 @@ namespace SelfStudyRoom.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class StuRoom
+    public partial class SeatDetail
     {
-        public StuRoom()
-        {
-            this.Seat = new HashSet<Seat>();
-        }
-    
         public int Id { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> SeatNum { get; set; }
-        public Nullable<int> Empty_Seat { get; set; }
-        public string Addr { get; set; }
-        public string IsAir { get; set; }
+        public Nullable<int> SeatId { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public Nullable<System.DateTime> StartTime { get; set; }
+        public Nullable<System.DateTime> EndTime { get; set; }
         public string State { get; set; }
-        public Nullable<System.DateTime> AddTime { get; set; }
-        public string Detail { get; set; }
     
-        public virtual ICollection<Seat> Seat { get; set; }
+        public virtual Seat Seat { get; set; }
+        public virtual UserInfo UserInfo { get; set; }
     }
 }
