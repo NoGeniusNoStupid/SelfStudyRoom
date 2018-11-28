@@ -22,6 +22,7 @@ namespace SelfStudyRoom.Controllers
         {
             //分页设置
             int pageIndex = Request.QueryString["pageIndex"] != null ? int.Parse(Request.QueryString["pageIndex"]) : 1;
+            search = Request.QueryString["search"] != null ? Request.QueryString["search"].ToString() : search;
             int pageSize = 15;//页面记录数
             List<Seat> mlist = new List<Seat>();
             var roomList = Entity.StuRoom.Where(a => true).OrderBy(a => a.Id).ToList() ;
@@ -45,7 +46,7 @@ namespace SelfStudyRoom.Controllers
 
             int listCount = Entity.Seat.Where(a => a.StuRoom.Name.Contains(search)).Count();
             //生成导航条
-            string strBar = PageBarHelper.GetPagaBar(pageIndex, listCount, pageSize);
+            string strBar = PageBarHelper.GetPagaBar(pageIndex, listCount, pageSize, search);
 
             ViewData["List"] = mlist;
             ViewData["Bar"] = strBar;

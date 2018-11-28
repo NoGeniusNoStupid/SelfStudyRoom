@@ -20,6 +20,25 @@
     <link rel="stylesheet" href="/Content/Admin/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="/Content/Admin/images/favicon.png" />
+    <script>
+        function submit() {
+            var Account = document.getElementById("Account").value;
+            var Password = document.getElementById("Password").value;
+            var loginForm = document.getElementById("loginForm");
+            if (Account == null)
+            {
+                alert("请输入账号");
+                return false;
+            }
+            if (Password == null)
+            {
+                alert("请输入密码");
+                return false;
+            }
+            loginForm.submit();
+        }
+
+    </script>
 </head>
 <body>
     <div class="container-scroller">
@@ -33,22 +52,41 @@
                             </div>
                             <h4>你好! 欢迎来到自习室管理系统</h4>
                             <h6 class="font-weight-light">请登录吧</h6>
-                            <form class="pt-3" method="post" action="/Home/Login">
+                            <form id="loginForm" class="pt-3" method="post" action="/Home/Login">
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="账号/邮箱/手机号">
+                                    <input type="email" class="form-control form-control-lg" id="Account" name="Account" placeholder="账号">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="密码">
+                                    <input type="password" class="form-control form-control-lg" id="Password" name="Password" placeholder="密码">
                                 </div>
-                                <div class="mt-3">
-                                    <a class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" href="#">登陆</a>
+                                <div class="form-group">
+                                    <div class="form-check" style="display:inline;float:left">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="1" checked="checked">
+                                            普通用户
+                                            <i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check" style="display: inline; float: left; ">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="2">
+                                            管理员
+                                            <i class="input-helper"></i>
+                                        </label>
+                                    </div>
                                 </div>
-                               
-                                
-                                <div class="text-center mt-4 font-weight-light">
-                                    没有账号? <a href="/Home/Register" class="text-primary">注册</a>
+                                <div class="form-group">
+                                    <div class="mt-3">
+                                        <input type="button" onclick="submit()" value="登陆" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" />
+                                    </div>
+                                 
+                                    <div class="text-center mt-4 font-weight-light">
+                                        没有账号? <a href="/Home/Register" class="text-primary">注册</a>
+                                    </div>
                                 </div>
-                            </form>
+                                    
+</form>
                         </div>
                     </div>
                 </div>

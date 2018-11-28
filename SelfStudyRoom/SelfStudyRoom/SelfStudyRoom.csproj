@@ -410,6 +410,8 @@
     <Content Include="Views\Shared\master.cshtml" />
     <Content Include="Views\StuRoom\Manage.cshtml" />
     <Content Include="Views\Seat\Manage.cshtml" />
+    <Content Include="Views\SeatDetail\Add.cshtml" />
+    <Content Include="Views\Shared\usermaster.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

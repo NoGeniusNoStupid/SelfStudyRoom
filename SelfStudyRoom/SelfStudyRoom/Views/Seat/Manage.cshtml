@@ -54,7 +54,8 @@
                             int columnNum = 5;//每行显示5个
                             int rowNum=Convert.ToInt32(Math.Ceiling(mlist.Count/5.0));//计算行数
                             string btnClass=string.Empty;
-
+                            string sTime=string.Empty;
+                            TimeSpan span=new TimeSpan();//定义日期
                             for (int i = 0; i < rowNum; i++)
                             {
                                 <tr>
@@ -64,7 +65,7 @@
                                          <td>
                                              @if (mlist[index].State == "空闲")
                                                  {
-                                               <a style="width: 180px; height: 120px" href="#" class="btn btn-gradient-success">
+                                               <a style="width: 180px; height: 120px" href="/SeatDetail/Add/@mlist[index].Id" class="btn btn-gradient-success">
                                                  座位编号：@mlist[index].Id<br />
                                                  <br />
                                                  状态：@mlist[index].State<br />
@@ -75,13 +76,20 @@
 
                                              @if (mlist[index].State == "使用中")
                                                  {
-                                                
+                                               if (mlist[index].StartTime != null && mlist[index].EndTime!=null)
+                                               {
+                                                   span = Convert.ToDateTime(mlist[index].EndTime).Subtract(Convert.ToDateTime(mlist[index].StartTime));
+                                                   if (span.Hours > 0)
+                                                   { sTime = string.Format("{0}小时{1}分钟", span.Hours, span.Minutes); }
+                                                   else
+                                                   { sTime = string.Format("{0}分钟", span.Minutes); }
+                                               }
                                                <a style="width: 180px; height: 120px" href="#" class="btn btn-gradient-danger">
                                                  座位编号：@mlist[index].Id<br />
                                                  <br />
                                                  状态：@mlist[index].State<br />
                                                  <br />
-                                                 剩余时间：10分钟<br />
+                                                 剩余时间：@sTime<br />
                                                </a>       
                                                 @Html.Raw("&nbsp; &nbsp");                                         
                                              }
@@ -105,10 +113,10 @@
                        
                     </table>
 
-                    @*<div style="float:right">
+                    <div style="float:right">
                         <input type="hidden" name="search" value="@ViewData["search"].ToString()" />
                         @Html.Raw(ViewData["Bar"])
-                    </div>*@
+                    </div>
                 </div>
             </div>
         </div>

@@ -16,9 +16,32 @@ namespace SelfStudyRoom.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string UserName,string Pwd)
+        public ActionResult Login(string Account, string Password,int optionsRadios)
         {
-            return View();
+            if (optionsRadios == 1)
+            {
+                //普通用户登录
+                var userInfo = Entity.UserInfo.FirstOrDefault(a => a.StuNo == Account && a.Password == Password);
+                if (userInfo == null)
+                    return RedirectDialogToAction("Login", "Home", "账号或密码输入错误！请重新检查。");
+                else
+                {
+                    Session["UserId"] = userInfo.Id;
+                    return RedirectToAction("Index", "UserInfo");
+                }
+            }
+            else
+            {
+                //管理员登陆
+                var adminInfo = Entity.Admin.FirstOrDefault(a => a.AdminName == Account && a.AdminPwd == Password);
+                if (adminInfo == null)
+                    return RedirectDialogToAction("Login", "Home", "账号或密码输入错误！请重新检查。");
+                else
+                {
+                    Session["AdminId"] = adminInfo.Id;
+                    return RedirectToAction("Index", "Admin"); 
+                }
+            }
         }
         #endregion
 

@@ -11,7 +11,7 @@ namespace SelfStudyRoom.Public
     public class PageBarHelper
     {
 
-        public static string GetPagaBar(int pageIndex, int listCount, int pageSize = 10, int barCount = 5)
+        public static string GetPagaBar(int pageIndex, int listCount, int pageSize = 10, string search=null, int barCount = 5)
         {
             //空记录
             if (listCount == 0)
@@ -56,30 +56,68 @@ namespace SelfStudyRoom.Public
          
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("共 {0} 条数据   当前 {1}/{2} 页 &nbsp;&nbsp;&nbsp;&nbsp;", listCount, pageIndex, pageCount);
-            //首页
-            if (pageIndex > 1)
+            string url = string.Empty;
+            if (string.IsNullOrEmpty(search))
             {
-                sb.AppendFormat("<a href='?pageIndex={0}'  onfocus='this.blur()' >首页</a>&nbsp;&nbsp;", 1);
-                sb.AppendFormat("<a href='?pageIndex={0}'  onfocus='this.blur()' >上一页</a>&nbsp;&nbsp;", pageIndex - 1);
-            }
-            //计算中间页
-            for (int i = start; i <= end; i++)
-            {
-                if (i == pageIndex)
+                url = "<a href='?pageIndex={0}' onfocus='this.blur()' >{1}</a>&nbsp;&nbsp;";
+                //首页
+                if (pageIndex > 1)
                 {
-                    sb.Append(i + "&nbsp;&nbsp;&nbsp;&nbsp;");
+                    sb.AppendFormat(url, 1, "首页");
+                    sb.AppendFormat(url, pageIndex - 1, "上一页");
                 }
-                else
+                //计算中间页
+                for (int i = start; i <= end; i++)
                 {
-                    sb.AppendFormat("<a href='?pageIndex={0}' onfocus='this.blur()' >{0}</a>&nbsp;&nbsp;&nbsp;&nbsp;", i);
+                    if (i == pageIndex)
+                    {
+                        sb.Append(i + "&nbsp;&nbsp;&nbsp;&nbsp;");
+                    }
+                    else
+                    {
+                        sb.AppendFormat(url, i, i);
+                    }
+                }
+                //下一页
+                if (pageIndex < pageCount)
+                {
+
+                    sb.AppendFormat(url, pageIndex + 1,"下一页");
+                    sb.AppendFormat(url, pageCount, "尾页");
+                }
+
+            }
+            else
+            {
+                url = "<a href='?pageIndex={0}&&search={2}'  onfocus='this.blur()' >{1}</a>&nbsp;&nbsp;";
+                //首页
+                if (pageIndex > 1)
+                {
+                    sb.AppendFormat(url, 1, "首页",search);
+                    sb.AppendFormat(url, pageIndex - 1, "上一页", search);
+                }
+                //计算中间页
+                for (int i = start; i <= end; i++)
+                {
+                    if (i == pageIndex)
+                    {
+                        sb.Append(i + "&nbsp;&nbsp;&nbsp;&nbsp;");
+                    }
+                    else
+                    {
+                        sb.AppendFormat(url, i, i,search);
+                    }
+                }
+                //下一页
+                if (pageIndex < pageCount)
+                {
+
+                    sb.AppendFormat(url, pageIndex + 1, "下一页",search);
+                    sb.AppendFormat(url, pageCount, "尾页",search);
                 }
             }
-            //下一页
-            if (pageIndex < pageCount)
-            {
-                sb.AppendFormat("<a href='?pageIndex={0}'  onfocus='this.blur()'>下一页</a>&nbsp;&nbsp;&nbsp;&nbsp;", pageIndex + 1);
-                sb.AppendFormat("<a href='?pageIndex={0}'  onfocus='this.blur()'>尾页</a>&nbsp;&nbsp;&nbsp;&nbsp;", pageCount);
-            }
+          
+           
 
             return sb.ToString();
         }
