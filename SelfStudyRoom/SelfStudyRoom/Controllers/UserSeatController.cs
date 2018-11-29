@@ -61,7 +61,7 @@ namespace SelfStudyRoom.Controllers
             SeatDetail IsExist = Entity.SeatDetail.FirstOrDefault(a => a.UserId == userId&&a.State!="离座");
             if (IsExist!=null)
             {
-                return RedirectDialogToAction("已有未离座的记录，请注销其他记录，再进行操作！");
+                return RedirectDialogToAction("已有未离座的记录，请注销其他记录，再进行操作！",true);
             }
 
             DateTime now = DateTime.Now;
@@ -168,6 +168,7 @@ namespace SelfStudyRoom.Controllers
                     Entity.Entry(seat).State = EntityState.Modified;
                 }
             }
+            Entity.SaveChanges();
         }
 
         ////快速就坐

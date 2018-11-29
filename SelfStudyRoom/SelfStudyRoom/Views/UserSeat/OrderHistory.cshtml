@@ -78,15 +78,16 @@
                                         <td>@item.EndTime</td>
                                         <td>@item.State</td>
                                         <td>
-                                            @if(item.State=="正常")
-                                            {
-                                                <a href="/UserSeat/Save/@item.Id" onclick="return confirm('确定要保留吗?保留时间30分钟！')" class="btn btn-gradient-info btn-fw">保留</a>
-                                                <a href="/UserSeat/Exit/@item.Id" onclick="return confirm('确定要离座吗?')" class="btn btn-gradient-danger btn-fw">离座</a>
-                                            }
+                                            @if (item.State == "正常")
+{
+    <a href="/UserSeat/Save/@item.Id" style="min-width:50px;" onclick="return confirm('确定要保留吗?保留时间30分钟！')" class="btn btn-gradient-info">保留</a>
+    <a href="/UserSeat/Exit/@item.Id" onclick="return confirm('确定要离座吗?')" style="min-width:50px" class="btn btn-gradient-danger " >离座</a>
+
+}
                                             else if (item.State == "保留")
                                             {
-                                                <a href="/UserSeat/SitDown/@item.Id" class="btn btn-gradient-info btn-fw">就坐</a>
-                                                <a href="/UserSeat/Exit/@item.Id" onclick="return confirm('确定要离座吗?')" class="btn btn-gradient-danger btn-fw">离座</a>
+                                                <a href="/UserSeat/SitDown/@item.Id" style="min-width:50px;" class="btn btn-gradient-info">就坐</a>
+    <a href="/UserSeat/Exit/@item.Id" style="min-width:50px;" onclick="return confirm('确定要离座吗?')" class="btn btn-gradient-danger">离座</a>
                                             }
                                         </td>
                                     </tr>

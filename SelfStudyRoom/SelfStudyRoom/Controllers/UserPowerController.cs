@@ -20,6 +20,9 @@ namespace SelfStudyRoom.Controllers
                 string msg = "请先登录，再进行操作！";
                 filterContext.Result = RedirectDialogToAction("Login", "Home", msg);
             }
+            int userId = Convert.ToInt32(Session["UserId"]);
+            var UserInfo = Entity.UserInfo.FirstOrDefault(a => a.Id == userId);
+            ViewData["UserInfo"] = UserInfo;
         }
     }
 }

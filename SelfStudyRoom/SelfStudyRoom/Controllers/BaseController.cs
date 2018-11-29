@@ -28,7 +28,7 @@ namespace SelfStudyRoom.Controllers
         /// <param name="controllerName">控制器名称</param>
         /// <param name="roteValues">参数</param>
         /// <returns></returns>
-        protected ActionResult RedirectDialogToAction(string actionName, string controllerName = null, string msg = null, int ros = -1, object roteValues = null)
+        protected ActionResult RedirectDialogToAction(string actionName, string controllerName , string msg = null, int ros = -1, object roteValues = null)
         {
             if (string.IsNullOrEmpty(msg))
             {
@@ -48,12 +48,18 @@ namespace SelfStudyRoom.Controllers
         /// 仅提示
         /// </summary>
         /// <param name="msg"></param>
+        /// <param name="isHistory">返回上一页</param>
         /// <returns></returns>
-        protected ActionResult RedirectDialogToAction(string msg)
+        protected ActionResult RedirectDialogToAction(string msg,bool isHistory)
         {
-            string strTip = string.Format(@"<script languge='javascript'>alert('{0}');</script>", msg); ;
+            string tip = string.Empty;
+            if(isHistory)
+                tip="history.back();";
+            string strTip = string.Format(@"<script languge='javascript'>alert('{0}');{1}</script>", msg, tip) ;
             Response.Write(strTip);
             return null;
+          
         }
+       
     }
 }

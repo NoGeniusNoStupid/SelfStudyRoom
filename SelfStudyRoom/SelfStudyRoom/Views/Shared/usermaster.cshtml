@@ -19,11 +19,26 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="/Content/Admin/images/favicon.png" />
     @RenderSection("scripts", required: false)
+
+    <script language="javascript">
+        // 这个脚本是 ie6和ie7 通用的脚本
+        function custom_close() {
+            if
+(confirm("您确定要关闭本页吗？")) {
+                window.opener = null;
+                window.open('', '_self');
+                window.close();
+            }
+            else { }
+        }
+    </script>
 </head>
 
 <body>
 
-
+    @{
+        SelfStudyRoom.Models.UserInfo userInfo = (SelfStudyRoom.Models.UserInfo)ViewData["UserInfo"];
+    }
 
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
@@ -38,15 +53,23 @@
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                             <div class="nav-profile-img">
-                                <img src="/Content/Admin/images/faces/face1.jpg" alt="image">
+                                @if (userInfo.Image != null)
+                                {
+                                      <img src="@userInfo.Image" alt="image">
+                                }
+                                else
+                                {
+                                      <img src="/Content/Admin/images/faces/face1.jpg" alt="image">
+                                }
+                             
                                 <span class="availability-status online"></span>
                             </div>
                             <div class="nav-profile-text">
-                                <p class="mb-1 text-black">用户名</p>
+                                <p class="mb-1 text-black">@userInfo.Name</p>
                             </div>
                         </a>
                         <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="/UserInfo/Index">
                                 <i class="mdi mdi-cached mr-2 text-success"></i>
                                 刷新
                             </a>
@@ -58,13 +81,13 @@
                         </div>
                     </li>
                     <li class="nav-item d-none d-lg-block full-screen-link">
-                        <a class="nav-link">
+                        <a class="nav-link" >
                             <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
                         </a>
                     </li>
 
                     <li class="nav-item nav-logout d-none d-lg-block">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" onclick="custom_close()">
                             <i class="mdi mdi-power"></i>
                         </a>
                     </li>
@@ -83,18 +106,26 @@
                     <li class="nav-item nav-profile">
                         <a href="#" class="nav-link">
                             <div class="nav-profile-image">
-                                <img src="/Content/Admin/images/faces/face1.jpg" alt="profile">
+                                @if (userInfo.Image != null)
+                                {
+                                    <img src="@userInfo.Image" alt="image">
+                                }
+                                else
+                                {
+                                    <img src="/Content/Admin/images/faces/face1.jpg" alt="profile">
+                                }
+                              
                                 <span class="login-status online"></span> <!--change to offline or busy as needed-->
                             </div>
                             <div class="nav-profile-text d-flex flex-column">
-                                <span class="font-weight-bold mb-2">用户名</span>
+                                <span class="font-weight-bold mb-2">@userInfo.Name</span>
                                 <span class="text-secondary text-small">普通用户</span>
                             </div>
                             <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="/UserInfo/Index">
                             <span class="menu-title">主页</span>
                             <i class="mdi mdi-home menu-icon"></i>
                         </a>
@@ -123,7 +154,7 @@
                         <div class="collapse" id="general-pages">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item"> <a class="nav-link" href="/UserInfo/Edit">资料完善</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">密码修改</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/UserInfo/UpdatePassword">密码修改</a></li>
                             </ul>
                         </div>
                     </li>

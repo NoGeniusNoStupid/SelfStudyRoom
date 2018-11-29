@@ -8,6 +8,9 @@
 
     <script>
         function addForm() {
+
+
+
             addform.submit();
         }
         //function startRead() {
@@ -50,6 +53,7 @@
                         <form id="addform" class="forms-sample" method="post" action="/UserInfo/Edit" enctype="multipart/form-data">
                             <input name="Id" type="hidden" value="@Model.Id" />
                             <input name="Password" type="hidden" value="@Model.Password" />
+                            <input name="oldPic" type="hidden" value="@Model.Image" />
                             <div class="form-group">
                                 <label for="exampleInputName1">账号：@Model.StuNo</label>
                                 <input type="hidden" value="@Model.StuNo" name="StuNo" />
@@ -82,6 +86,10 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label for="exampleSelectGender">姓名</label>
+                                <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name">
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleSelectGender">年龄</label>
                                 <input type="text" class="form-control" id="Grade" name="Grade" value="@Model.Grade">
                             </div>
@@ -95,7 +103,7 @@
                                 <label for="exampleSelectGender">头像</label>
                                 <input type="file" name="Image" id="Image" class="file-upload-default">
                                 <div class="input-group col-xs-12">
-                                    <input type="text" class="form-control file-upload-info" name="oldPic" value="@Model.Image" disabled="" placeholder="">
+                                    <input type="text" class="form-control file-upload-info" name="" value="@Model.Image" disabled="" placeholder="">
                                     <span class="input-group-append">
                                         <a href="#" class="file-upload-browse btn btn-gradient-primary">浏览</a>
                                     </span>

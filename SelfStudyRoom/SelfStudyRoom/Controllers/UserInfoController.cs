@@ -49,16 +49,17 @@ namespace SelfStudyRoom.Controllers
             return View();
         }
         [HttpPost]
-         public ActionResult UpdatePassword(string pwd,string newPwd)
+        public ActionResult UpdatePassword(string OldPwd, string NowPwd)
         {
             int userId = Convert.ToInt32(Session["UserId"]);
             var userInfo = Entity.UserInfo.FirstOrDefault(a => a.Id == userId);
-            
-
-            return RedirectDialogToAction("Index", "UserInfo", "", Entity.SaveChanges());   
+            if (userInfo.Password != OldPwd)
+            {
+                return RedirectDialogToAction("原密码错误！请检查。", true);
+            }
+            userInfo.Password = NowPwd;
+            return RedirectDialogToAction("Index", "UserInfo", "密码修改成功！", Entity.SaveChanges());   
         }
-
-
 
         /// <summary>
         /// 保存图片
