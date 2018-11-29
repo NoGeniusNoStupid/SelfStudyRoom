@@ -1,0 +1,93 @@
+﻿@model SelfStudyRoom.Models.Seat
+@{
+    ViewBag.Title = "OrderSeat";
+    Layout = "~/Views/Shared/usermaster.cshtml";
+}
+@section scripts{
+      <script>
+          function addForm() {
+              var startTime = document.getElementById("StartTime").value;
+              var endTime = document.getElementById("EndTime").value;
+              var timestamp = Date.parse(new Date());//获取当前时间戳
+              var startTimestamp = Date.parse(startTime);//获取开始时间戳
+              var addform = document.getElementById("addform");
+              if (startTime == "")
+              {
+                  alert("开始时间不能为空");
+                  return false;
+              }
+              if (startTimestamp < timestamp) {
+                  alert("开始时间不能小于当前时间");
+                  return false;
+              }
+              if (endTime == "") {
+                  alert("结束时间不能为空");
+                  return false;
+              }
+              if (endTime < startTime) {
+                  alert("结束不能小于开始时间");
+                  return false;
+              }
+
+              addform.submit();
+          }
+      </script>
+    }
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title"></h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/UserSeat/Manage">座位管理</a></li>
+                <li class="breadcrumb-item active" aria-current="page">预约自习室</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div style="width:900px;margin-left:auto;margin-right:auto">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        @*<h4 class="card-title">Basic form elements</h4>
+                            <p class="card-description">
+                                Basic form elements
+                            </p>*@
+                        <form id="addform" class="forms-sample" method="post" action="/UserSeat/OrderSeat">
+                            <div class="form-group">
+                                <label for="exampleInputName1">自习室名称：@Model.StuRoom.Name</label>
+                                @*<input type="hidden" value="@Model.StuRoom.Name" name="UserId" />*@
+                            </div> 
+                            <div class="form-group">
+                                <label for="exampleInputEmail3">座位编号：@Model.Id</label>
+                                <input type="hidden" value="@Model.Id" name="SeatId" />
+                            </div>
+                            @*<div class="form-group">
+                                <label for="exampleInputPassword4">开始时间</label>
+                                <input type="datetime-local" class="form-control" id="StartTime" name="StartTime">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleSelectGender">结束时间</label>
+                                <input type="datetime-local" class="form-control" id="EndTime" name="EndTime">
+                            </div>*@
+                            @*<div class="form-group">
+                <label>File upload</label>
+                <input type="file" name="img[]" class="file-upload-default">
+                <div class="input-group col-xs-12">
+                    <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                    <span class="input-group-append">
+                        <button class="file-upload-browse btn btn-gradient-primary" type="button">Upload</button>
+                    </span>
+                </div>
+            </div>*@
+                            <div style="float:right">
+                                <button type="button" onclick="addForm()" class="btn btn-gradient-primary mr-2">就坐</button>
+                                <button class="btn btn-light">重置</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

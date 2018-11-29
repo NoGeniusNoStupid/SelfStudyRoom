@@ -1,0 +1,135 @@
+﻿@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/usermaster.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">
+            快速就坐
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">快速就坐</li>
+                @*<li class="breadcrumb-item"><a href="/Seat/Add">添加座位</a></li>*@
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    @*<h4 class="card-title">Bordered table</h4>
+                        <p class="card-description">
+                            Add class <code>.table-bordered</code>
+                        </p>*@
+                    <form method="post" action="/Seat/Manage">
+                        <div class="input-group">
+                            <div class="input-group-prepend bg-transparent">
+                                <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                            </div>
+                            <select style="margin-top:3px" class="form-control" id="search" name="search">
+                                @{
+                                    List<SelfStudyRoom.Models.StuRoom> roomList = (List<SelfStudyRoom.Models.StuRoom>)ViewData["roomList"];
+                                    foreach (var item in roomList)
+                                    {
+                                        if (item.Name == ViewData["search"].ToString())
+                                        {
+                                            <option value="@item.Name" selected="selected">@item.Name</option>}
+                                        else
+                                        {
+                                            <option value="@item.Name">@item.Name</option>}
+                                    }
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-gradient-success btn-fw">查询</button>
+                        </div>
+                    </form>
+                    <br />
+                    <br />
+                    <table style="border: none; border-collapse: separate; border-spacing: 0px 10px;">
+                        @{
+                            List<SelfStudyRoom.Models.Seat> mlist = (List<SelfStudyRoom.Models.Seat>)ViewData["List"];
+                            int columnNum = 5;//每行显示5个
+                            int rowNum = Convert.ToInt32(Math.Ceiling(mlist.Count / 5.0));//计算行数
+                            string sTime = string.Empty;//剩余日期
+                            TimeSpan span = new TimeSpan();//定义日期计算对象
+                            DateTime now = DateTime.Now;//点前日期
+                            for (int i = 0; i < rowNum; i++)
+                            {
+                                <tr>
+                                    @for (int j = 0; j < columnNum; j++)
+                                    {
+                                        int index = i * 5 + j;
+                                        <td>
+                                            @if (mlist[index].State == "空闲")
+                                            {
+                                                <a style="width: 180px; height: 120px" href="/UserSeat/OrderSeat/@mlist[index].Id/@mlist[i].RoomId" 
+                                                   onclick="return confirm('确定要就坐吗？')"
+                                                   class="btn btn-gradient-success">
+                                                    座位编号：@mlist[index].Id<br />
+                                                    <br />
+                                                    状态：@mlist[index].State<br />
+                                                </a>
+                                                @Html.Raw("&nbsp; &nbsp");
+                                            }
+                                            @if (mlist[index].State == "使用中")
+                                            {
+                                                var seatDetail = mlist[index].SeatDetail.FirstOrDefault(a => a.State == "正常");
+                                                string userName = seatDetail.UserInfo.Name == null ? "匿名" : seatDetail.UserInfo.Name;
+                                                <a style="width: 180px; height: 120px" href="#" class="btn btn-gradient-danger">
+                                                    座位编号：@mlist[index].Id<br />
+                                                    <br />
+                                                    状态：@mlist[index].State<br />
+                                                    <br />
+                                                    使用人：@userName
+                                                    <br />
+                                                </a>
+                                                @Html.Raw("&nbsp; &nbsp");
+                                            }
+
+                                            @if (mlist[index].State == "保留")
+                                            {
+                                                span = Convert.ToDateTime(mlist[index].SaveTime).Subtract(now);
+                                                sTime = string.Format("{0}分钟", span.Minutes);
+                                                
+                                               <a style="width: 180px; height: 120px" href="#" class="btn btn-gradient-warning">
+                                                    座位编号：@mlist[index].Id<br />
+                                                    <br />
+                                                    状态：@mlist[index].State<br />
+                                                    <br />
+                                                    剩余时间：@sTime
+                                                    <br />
+                                                </a>                  
+                                                @Html.Raw("&nbsp; &nbsp");
+                                            }
+
+                                            @if (mlist[index].State == "停用")
+                                            {
+                                                <a style="width: 180px; height: 120px; " href="#" class="btn btn-gradient-dark">
+                                                    座位编号：@mlist[index].Id<br />
+                                                    <br />
+                                                    状态：@mlist[index].State<br />
+                                                </a>
+                                                @Html.Raw("&nbsp; &nbsp");
+                                            }
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+
+                    </table>
+
+                    <div style="float:right">
+                        <input type="hidden" name="search" value="@ViewData["search"].ToString()" />
+                        @Html.Raw(ViewData["Bar"])
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

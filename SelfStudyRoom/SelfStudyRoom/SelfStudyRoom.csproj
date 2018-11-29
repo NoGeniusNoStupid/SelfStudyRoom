@@ -140,6 +140,8 @@
     <Compile Include="Controllers\SeatDetailController.cs" />
     <Compile Include="Controllers\StuRoomController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
+    <Compile Include="Controllers\UserPowerController.cs" />
+    <Compile Include="Controllers\UserSeatController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -412,9 +414,14 @@
     <Content Include="Views\Seat\Manage.cshtml" />
     <Content Include="Views\SeatDetail\Add.cshtml" />
     <Content Include="Views\Shared\usermaster.cshtml" />
+    <Content Include="Views\UserSeat\Manage.cshtml" />
+    <Content Include="Views\UserSeat\OrderSeat.cshtml" />
+    <Content Include="Views\UserSeat\OrderHistory.cshtml" />
+    <Content Include="Views\UserInfo\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="File\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

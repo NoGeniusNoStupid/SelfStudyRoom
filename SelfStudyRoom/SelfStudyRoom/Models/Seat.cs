@@ -24,8 +24,8 @@ namespace SelfStudyRoom.Models
         public string SeatNo { get; set; }
         public Nullable<System.DateTime> StartTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }
-        public string SeatSave { get; set; }
         public string State { get; set; }
+        public Nullable<System.DateTime> SaveTime { get; set; }
     
         public virtual StuRoom StuRoom { get; set; }
         public virtual ICollection<SeatDetail> SeatDetail { get; set; }

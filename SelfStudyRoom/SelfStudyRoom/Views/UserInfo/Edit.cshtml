@@ -1,0 +1,127 @@
+﻿@model SelfStudyRoom.Models.UserInfo
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/usermaster.cshtml";
+}
+@section scripts{
+
+
+    <script>
+        function addForm() {
+            addform.submit();
+        }
+        //function startRead() {
+        //    var fileDom = document.getElementById("Image");
+        //    var img = document.getElementById("imgContent");
+        //    if (fileDom && img) {
+        //        flieHandle(fileDom, img)
+        //    }
+        //}
+        //function flieHandle(fileDom, img) {
+        //    //读取计算机文件
+        //    var file = fileDom.files[0];
+        //    var reader = new FileReader();
+        //    reader.readAsDataURL(file);
+        //    reader.onloadstart = function () {
+        //        console.log('文件上传处理......');
+        //    };
+        //    //操作完成
+        //    reader.onload = function (e) {
+        //        //flie 对象的属性
+        //        img.setAttribute('src', reader.result);
+        //    };
+        //}
+    </script>
+}
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title"></h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">个人信息管理</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div style="width:900px;margin-left:auto;margin-right:auto">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="addform" class="forms-sample" method="post" action="/UserInfo/Edit" enctype="multipart/form-data">
+                            <input name="Id" type="hidden" value="@Model.Id" />
+                            <input name="Password" type="hidden" value="@Model.Password" />
+                            <div class="form-group">
+                                <label for="exampleInputName1">账号：@Model.StuNo</label>
+                                <input type="hidden" value="@Model.StuNo" name="StuNo" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail3">注册时间：@Model.RegTime</label>
+                                <input type="hidden" value="@Model.RegTime" name="RegTime" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword4">性别</label>
+                                <select class="form-control" name="Sex">
+                                    @if (Model.Sex == null)
+                                    {
+                                        <option selected="selected">男</option>
+                                        <option>女</option>
+                                    }
+                                    else
+                                    {
+                                        if (Model.Sex == "男")
+                                        {
+                                            <option selected="selected">男</option>
+                                            <option>女</option>
+                                        }
+                                        else
+                                        {
+                                            <option selected="selected">女</option>
+                                            <option>男</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleSelectGender">年龄</label>
+                                <input type="text" class="form-control" id="Grade" name="Grade" value="@Model.Grade">
+                            </div>
+                            @*<input type="file" class="form-control" id="Image" name="Image">*@
+                            @*<div class="form-group">
+              <label for="exampleSelectGender">头像</label>
+              <img id="imgContent" width="120" height="120" src="@Model.Image" />
+              <input type="file" class="form-control" id="Image" name="Image" onchange="startRead()">
+            </div>*@
+                            <div class="form-group">
+                                <label for="exampleSelectGender">头像</label>
+                                <input type="file" name="Image" id="Image" class="file-upload-default">
+                                <div class="input-group col-xs-12">
+                                    <input type="text" class="form-control file-upload-info" name="oldPic" value="@Model.Image" disabled="" placeholder="">
+                                    <span class="input-group-append">
+                                        <a href="#" class="file-upload-browse btn btn-gradient-primary">浏览</a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleSelectGender">电话</label>
+                                <input type="text" class="form-control" id="Tel" name="Tel" value="@Model.Tel">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleSelectGender">邮箱</label>
+                                <input type="text" class="form-control" id="Email" name="Email" value="@Model.Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleSelectGender">联系地址</label>
+                                <input type="text" class="form-control" id="Dormitory" name="Dormitory" value="@Model.Dormitory">
+                            </div>
+
+                            <div style="float:right">
+                                <button type="button" onclick="addForm()" class="btn btn-gradient-primary mr-2">提交</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

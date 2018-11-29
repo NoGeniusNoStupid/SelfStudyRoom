@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "OrderHistory";
+    Layout = "~/Views/Shared/usermaster.cshtml";
+}
+
+
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">
+            快速就坐
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">座位管理</li>
+                <li class="breadcrumb-item"><a href="#">快速就坐</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    @*<h4 class="card-title">Bordered table</h4>
+                        <p class="card-description">
+                            Add class <code>.table-bordered</code>
+                        </p>*@
+                    @*<form method="post" action="/StuRoom/Manage">
+                        <div class="input-group">
+
+                            <div class="input-group-prepend bg-transparent">
+                                <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                            </div>
+                            <input name="search" type="text" class="form-control bg-transparent border-0" placeholder="根据自习室名称查询">
+                            <button type="submit" class="btn btn-gradient-success btn-fw">查询</button>
+
+                        </div>
+                    </form>*@
+                    <br />
+                    <br />
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    编号
+                                </th>
+                                <th>
+                                    自习室名称
+                                </th>
+                                <th>
+                                    座位编号
+                                </th>
+                                <th>
+                                    开始时间
+                                </th>
+                                <th>
+                                    结束时间
+                                </th>
+                                <th>
+                                    状态
+                                </th>
+                                <th>
+                                    操作
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                List<SelfStudyRoom.Models.SeatDetail> mlist = (List<SelfStudyRoom.Models.SeatDetail>)ViewData["List"];
+
+                                foreach (var item in mlist)
+                                {       
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Seat.StuRoom.Name</td>                                   
+                                        <td>@item.Seat.Id</td>
+                                        <td>@item.StartTime</td>
+                                        <td>@item.EndTime</td>
+                                        <td>@item.State</td>
+                                        <td>
+                                            @if(item.State=="正常")
+                                            {
+                                                <a href="/UserSeat/Save/@item.Id" onclick="return confirm('确定要保留吗?保留时间30分钟！')" class="btn btn-gradient-info btn-fw">保留</a>
+                                                <a href="/UserSeat/Exit/@item.Id" onclick="return confirm('确定要离座吗?')" class="btn btn-gradient-danger btn-fw">离座</a>
+                                            }
+                                            else if (item.State == "保留")
+                                            {
+                                                <a href="/UserSeat/SitDown/@item.Id" class="btn btn-gradient-info btn-fw">就坐</a>
+                                                <a href="/UserSeat/Exit/@item.Id" onclick="return confirm('确定要离座吗?')" class="btn btn-gradient-danger btn-fw">离座</a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                    <div style="float:right">@Html.Raw(ViewData["Bar"])</div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

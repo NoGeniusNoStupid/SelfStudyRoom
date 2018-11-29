@@ -23,8 +23,8 @@
           <Property Name="SeatNo" Type="varchar" MaxLength="20" />
           <Property Name="StartTime" Type="datetime" />
           <Property Name="EndTime" Type="datetime" />
-          <Property Name="SeatSave" Type="varchar" MaxLength="2" />
           <Property Name="State" Type="varchar" MaxLength="20" />
+          <Property Name="SaveTime" Type="datetime" />
         </EntityType>
         <EntityType Name="SeatDetail">
           <Key>
@@ -94,7 +94,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SeatDetail_UserInfo">
-          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="SeatDetail" Type="Self.SeatDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserInfo">
@@ -144,12 +146,12 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoomId" Type="Int32" />
           <Property Name="SeatNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="StartTime" Type="DateTime" />
-          <Property Name="EndTime" Type="DateTime" />
-          <Property Name="SeatSave" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
           <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="StuRoom" Relationship="Self.FK_Seat_StuRoom" FromRole="Seat" ToRole="StuRoom" />
           <NavigationProperty Name="SeatDetail" Relationship="SelfStudyRoomModel.FK_SeatDetail_Seat" FromRole="Seat" ToRole="SeatDetail" />
+          <Property Name="SaveTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="StuRoom">
           <Key>
@@ -272,12 +274,12 @@
           <EntitySetMapping Name="Seat">
             <EntityTypeMapping TypeName="SelfStudyRoomModel.Seat">
               <MappingFragment StoreEntitySet="Seat">
+                <ScalarProperty Name="SaveTime" ColumnName="SaveTime" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RoomId" ColumnName="RoomId" />
                 <ScalarProperty Name="SeatNo" ColumnName="SeatNo" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="SeatSave" ColumnName="SeatSave" />
                 <ScalarProperty Name="State" ColumnName="State" />
               </MappingFragment>
             </EntityTypeMapping>
