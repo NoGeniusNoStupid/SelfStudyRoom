@@ -419,6 +419,7 @@
     <Content Include="Views\UserSeat\OrderHistory.cshtml" />
     <Content Include="Views\UserInfo\Edit.cshtml" />
     <Content Include="Views\UserInfo\UpdatePassword.cshtml" />
+    <Content Include="Views\StuRoom\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

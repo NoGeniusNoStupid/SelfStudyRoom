@@ -9,31 +9,70 @@
     <script>
         function addForm() {
 
+            var realname = document.getElementById("Name").value;
+            if (realname == "") {
+                alert("请输入姓名");
+                return false;
+            }
+            if (!isChinese(realname)) {
+                return false;
+            }
+            var age = document.getElementById("Grade").value;
+            if (age != parseInt(age) || (age < 0 || age > 100)) {
+                alert("年龄不符合要求");
+                return false;
+            }
+            //手机
+            var tel = document.getElementById("Tel").value;
+            if (!validatemobile(tel)) {
+                return false;
+            }
 
-
+            //邮箱
+            var email = document.getElementById("Email").value;
+            if (!CheckEmail(email)) {
+                return false;
+            }
+           
             addform.submit();
         }
-        //function startRead() {
-        //    var fileDom = document.getElementById("Image");
-        //    var img = document.getElementById("imgContent");
-        //    if (fileDom && img) {
-        //        flieHandle(fileDom, img)
-        //    }
-        //}
-        //function flieHandle(fileDom, img) {
-        //    //读取计算机文件
-        //    var file = fileDom.files[0];
-        //    var reader = new FileReader();
-        //    reader.readAsDataURL(file);
-        //    reader.onloadstart = function () {
-        //        console.log('文件上传处理......');
-        //    };
-        //    //操作完成
-        //    reader.onload = function (e) {
-        //        //flie 对象的属性
-        //        img.setAttribute('src', reader.result);
-        //    };
-        //}
+        //输入中文
+        function isChinese(obj) {
+            var reg = /^[\u0391-\uFFE5]+$/;
+            if (obj != "" && !reg.test(obj)) {
+                alert('必须输入中文！');
+                return false;
+            }
+            return true;
+        }
+        //邮箱校验
+        function CheckEmail(obj) {
+            //对电子邮件的验证
+            var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            if (!myreg.test(obj)) {
+                alert('请输入有效的邮箱！');
+                return false;
+            }
+            return true;
+
+        }
+        //手机校验
+        function validatemobile(mobile) {
+            if (mobile.length == 0) {
+                alert('手机号码不能为空！');
+                return false;
+            }
+            if (mobile.length != 11) {
+                alert('请输入有效的手机号码，需是11位！');
+                return false;
+            }
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if (!myreg.test(mobile)) {
+                alert('请输入有效的手机号码！');
+                return false;
+            }
+            return true;
+        }
     </script>
 }
 <div class="content-wrapper">

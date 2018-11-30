@@ -11,7 +11,7 @@ namespace SelfStudyRoom.Controllers
 {
     public class UserInfoController : UserPowerController
     {
-
+        //个人主页
         public ActionResult Index()
         {
             int userId = Convert.ToInt32(Session["UserId"]);
@@ -60,6 +60,13 @@ namespace SelfStudyRoom.Controllers
             userInfo.Password = NowPwd;
             return RedirectDialogToAction("Index", "UserInfo", "密码修改成功！", Entity.SaveChanges());   
         }
+        //退出
+        public ActionResult Out()
+        {
+            Session["UserId"] = null;
+            return RedirectToAction("Login", "Home");
+        }
+
 
         /// <summary>
         /// 保存图片

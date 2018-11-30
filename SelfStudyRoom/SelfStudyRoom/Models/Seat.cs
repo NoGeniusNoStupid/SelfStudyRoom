@@ -22,8 +22,6 @@ namespace SelfStudyRoom.Models
         public int Id { get; set; }
         public Nullable<int> RoomId { get; set; }
         public string SeatNo { get; set; }
-        public Nullable<System.DateTime> StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
         public string State { get; set; }
         public Nullable<System.DateTime> SaveTime { get; set; }
     

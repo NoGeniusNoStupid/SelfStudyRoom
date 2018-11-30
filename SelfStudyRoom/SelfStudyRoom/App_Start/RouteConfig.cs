@@ -21,7 +21,7 @@ namespace SelfStudyRoom
             routes.MapRoute(
                name: "Other",
                url: "{controller}/{action}/{id}/{other}",
-               defaults: new { controller = "Home", action = "Login", id = UrlParameter.Optional, Other = UrlParameter.Optional }
+               defaults: new { controller = "Home", action = "Login", id = UrlParameter.Optional, other = UrlParameter.Optional }
            );
         }
     }

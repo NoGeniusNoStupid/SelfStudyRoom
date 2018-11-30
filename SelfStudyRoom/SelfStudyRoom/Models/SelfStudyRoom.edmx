@@ -21,8 +21,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoomId" Type="int" />
           <Property Name="SeatNo" Type="varchar" MaxLength="20" />
-          <Property Name="StartTime" Type="datetime" />
-          <Property Name="EndTime" Type="datetime" />
           <Property Name="State" Type="varchar" MaxLength="20" />
           <Property Name="SaveTime" Type="datetime" />
         </EntityType>
@@ -146,8 +144,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoomId" Type="Int32" />
           <Property Name="SeatNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="StartTime" Type="DateTime" Precision="3" />
-          <Property Name="EndTime" Type="DateTime" Precision="3" />
           <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="StuRoom" Relationship="Self.FK_Seat_StuRoom" FromRole="Seat" ToRole="StuRoom" />
           <NavigationProperty Name="SeatDetail" Relationship="SelfStudyRoomModel.FK_SeatDetail_Seat" FromRole="Seat" ToRole="SeatDetail" />
@@ -278,8 +274,6 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RoomId" ColumnName="RoomId" />
                 <ScalarProperty Name="SeatNo" ColumnName="SeatNo" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="State" ColumnName="State" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -66,9 +66,7 @@ namespace SelfStudyRoom.Controllers
 
             DateTime now = DateTime.Now;
             Seat seat = Entity.Seat.FirstOrDefault(a => a.Id == id && a.RoomId == other);
-            seat.StartTime = now;
             seat.State = "使用中";
-
             Entity.Entry(seat).State = EntityState.Modified;
 
             
