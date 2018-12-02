@@ -1,0 +1,64 @@
+﻿@model SelfStudyRoom.Models.UserInfo
+@{
+    ViewBag.Title = "UserInfoDetail";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">
+            用户详细管理
+        </h3>
+        <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:history.go(-1)" >返回上一页</a></li>   
+                </ol>
+            </nav>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputName1">编号：@Model.Id</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputName1">账号：@Model.StuNo</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputName1">姓名：@Model.Name</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputName1">头像：<img src="@Model.Image" width="50" height="50" /></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputName1">性别：@Model.Sex</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputName1">年龄：@Model.Grade</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputName1">电话：@Model.Tel</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputName1">邮箱：@Model.Email</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputName1">联系方式：@Model.Dormitory</label>
+                    </div>
+                  
+                    <div class="form-group">
+                        <label for="exampleInputName1">注册时间：@Model.RegTime</label> 
+                    </div>
+                    <div class="form-group">
+                        <a href="/Admin/UserInfoInitPwd/@Model.Id" onclick="return confirm('确认要重置密码吗？')" class="btn btn-gradient-primary mr-2">重置密码</a>
+                        <a href="/Admin/UserInfoDelete/@Model.Id" onclick="return confirm('确认要删除用户吗？默认密码123456')" class="btn btn-gradient-primary mr-2">删除</a>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

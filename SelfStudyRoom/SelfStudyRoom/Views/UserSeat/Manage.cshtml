@@ -68,7 +68,7 @@
                                                 <a style="width: 180px; height: 120px" href="/UserSeat/OrderSeat/@mlist[index].Id/@mlist[i].RoomId" 
                                                    onclick="return confirm('确定要就坐吗？')"
                                                    class="btn btn-gradient-success">
-                                                    座位编号：@mlist[index].Id<br />
+                                                    座位编号：@mlist[index].SeatNo<br />
                                                     <br />
                                                     状态：@mlist[index].State<br />
                                                 </a>
@@ -79,7 +79,7 @@
                                                 var seatDetail = mlist[index].SeatDetail.FirstOrDefault(a => a.State == "正常");
                                                 string userName = seatDetail.UserInfo.Name == null ? "匿名" : seatDetail.UserInfo.Name;
                                                 <a style="width: 180px; height: 120px" href="#" class="btn btn-gradient-danger">
-                                                    座位编号：@mlist[index].Id<br />
+                                                    座位编号：@mlist[index].SeatNo<br />
                                                     <br />
                                                     状态：@mlist[index].State<br />
                                                     <br />
@@ -95,7 +95,7 @@
                                                 sTime = string.Format("{0}分钟", span.Minutes);
                                                 
                                                <a style="width: 180px; height: 120px" href="#" class="btn btn-gradient-warning">
-                                                    座位编号：@mlist[index].Id<br />
+                                                    座位编号：@mlist[index].SeatNo<br />
                                                     <br />
                                                     状态：@mlist[index].State<br />
                                                     <br />
@@ -108,7 +108,7 @@
                                             @if (mlist[index].State == "停用")
                                             {
                                                 <a style="width: 180px; height: 120px; " href="#" class="btn btn-gradient-dark">
-                                                    座位编号：@mlist[index].Id<br />
+                                                    座位编号：@mlist[index].SeatNo<br />
                                                     <br />
                                                     状态：@mlist[index].State<br />
                                                 </a>

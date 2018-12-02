@@ -54,7 +54,7 @@ namespace SelfStudyRoom.Controllers
         {
             string tip = string.Empty;
             if(isHistory)
-                tip="history.back();";
+                tip = "self.location=document.referrer;";
             string strTip = string.Format(@"<script languge='javascript'>alert('{0}');{1}</script>", msg, tip) ;
             Response.Write(strTip);
             return null;

@@ -12,6 +12,9 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AdminName" Type="varchar" MaxLength="50" />
           <Property Name="AdminPwd" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Tel" Type="varchar" MaxLength="20" />
+          <Property Name="Image" Type="varchar" MaxLength="50" />
           <Property Name="State" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Seat">
@@ -136,6 +139,9 @@
           <Property Name="AdminName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AdminPwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Seat">
           <Key>
@@ -260,6 +266,9 @@
           <EntitySetMapping Name="Admin">
             <EntityTypeMapping TypeName="SelfStudyRoomModel.Admin">
               <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="AdminName" ColumnName="AdminName" />
                 <ScalarProperty Name="AdminPwd" ColumnName="AdminPwd" />

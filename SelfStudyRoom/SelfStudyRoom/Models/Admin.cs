@@ -18,5 +18,8 @@ namespace SelfStudyRoom.Models
         public string AdminName { get; set; }
         public string AdminPwd { get; set; }
         public string State { get; set; }
+        public string Name { get; set; }
+        public string Tel { get; set; }
+        public string Image { get; set; }
     }
 }

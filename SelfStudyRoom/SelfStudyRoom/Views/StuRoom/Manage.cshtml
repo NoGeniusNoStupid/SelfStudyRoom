@@ -40,9 +40,9 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>
+                                @*<th>
                                     编号
-                                </th>
+                                </th>*@
                                 <th>
                                     自习室名称
                                 </th>
@@ -58,9 +58,9 @@
                                 <th>
                                     状态
                                 </th>
-                                <th>
+                                @*<th>
                                     添加时间
-                                </th>
+                                </th>*@
                                 <th>
                                     操作
                                 </th>
@@ -75,7 +75,7 @@
                                    int num =Convert.ToInt32( item.SeatNum - item.Empty_Seat);
                                    double percent = Convert.ToDouble(num) / Convert.ToDouble(item.SeatNum)*100;
                                    <tr>
-                                       <td>@item.Id</td>
+                                       @*<td>@item.Id</td>*@
                                        <td>@item.Name</td>
                                        @if (num < item.SeatNum / 2)
                                        {  
@@ -99,9 +99,18 @@
                                        <td>@item.Addr</td>
                                        <td>@item.IsAir</td>
                                        <td>@item.State</td>
-                                       <td>@item.AddTime</td>
+                                       @*<td>@item.AddTime</td>*@
                                        <td>
+                                           @if (item.State == "正常")
+                                           {
+                                              <a href="/StuRoom/SetState/@item.Id" style="min-width:50px"  class="btn btn-gradient-dark">停用</a>
+                                           }
+                                           else
+                                           {
+                                              <a href="/StuRoom/SetState/@item.Id" style="min-width:50px" class="btn btn-gradient-success">恢复</a>
+                                           }
                                            <a href="/StuRoom/Edit/@item.Id" style="min-width:50px"  class="btn btn-gradient-info">编辑</a>
+                                           
                                            <a href="/StuRoom/Delete/@item.Id" style="min-width:50px" onclick=" return confirm('确定要删除吗?')" class="btn btn-gradient-danger">删除</a>
                                        </td>
                                    </tr>

@@ -1,0 +1,108 @@
+﻿@model SelfStudyRoom.Models.Admin
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+@section scripts{
+
+
+    <script>
+        function addForm() {
+
+            var realname = document.getElementById("Name").value;
+            if (realname == "") {
+                alert("请输入姓名");
+                return false;
+            }
+            if (!isChinese(realname)) {
+                return false;
+            }
+            //手机
+            var tel = document.getElementById("Tel").value;
+            if (!validatemobile(tel)) {
+                return false;
+            }
+            addform.submit();
+        }
+        //输入中文
+        function isChinese(obj) {
+            var reg = /^[\u0391-\uFFE5]+$/;
+            if (obj != "" && !reg.test(obj)) {
+                alert('必须输入中文！');
+                return false;
+            }
+            return true;
+        }
+       
+        //手机校验
+        function validatemobile(mobile) {
+            if (mobile.length == 0) {
+                alert('手机号码不能为空！');
+                return false;
+            }
+            if (mobile.length != 11) {
+                alert('请输入有效的手机号码，需是11位！');
+                return false;
+            }
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if (!myreg.test(mobile)) {
+                alert('请输入有效的手机号码！');
+                return false;
+            }
+            return true;
+        }
+    </script>
+}
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title"></h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">个人信息管理</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div style="width:900px;margin-left:auto;margin-right:auto">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="addform" class="forms-sample" method="post" action="/Admin/Edit" enctype="multipart/form-data">
+                            <input name="Id" type="hidden" value="@Model.Id" />
+                            <input name="AdminPwd" type="hidden" value="@Model.AdminPwd" />
+                            <input name="oldPic" type="hidden" value="@Model.Image" />
+                            <input name="State" type="hidden" value="@Model.State" />
+                            <div class="form-group">
+                                <label for="exampleInputName1">账号：@Model.AdminName</label>
+                                <input type="hidden" value="@Model.AdminName" name="AdminName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleSelectGender">姓名</label>
+                                <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleSelectGender">头像</label>
+                                <input type="file" name="Image" id="Image" class="file-upload-default">
+                                <div class="input-group col-xs-12">
+                                    <input type="text" class="form-control file-upload-info" name="" value="@Model.Image" disabled="" placeholder="">
+                                    <span class="input-group-append">
+                                        <a href="#" class="file-upload-browse btn btn-gradient-primary">浏览</a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleSelectGender">电话</label>
+                                <input type="text" class="form-control" id="Tel" name="Tel" value="@Model.Tel">
+                            </div>
+                            <div style="float:right">
+                                <button type="button" onclick="addForm()" class="btn btn-gradient-primary mr-2">提交</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

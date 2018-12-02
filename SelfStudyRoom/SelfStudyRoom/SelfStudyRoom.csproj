@@ -290,6 +290,33 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="error-404.html" />
+    <Content Include="File\face1.jpg" />
+    <Content Include="File\face10.jpg" />
+    <Content Include="File\face11.jpg" />
+    <Content Include="File\face12.jpg" />
+    <Content Include="File\face13.jpg" />
+    <Content Include="File\face14.jpg" />
+    <Content Include="File\face15.jpg" />
+    <Content Include="File\face16.jpg" />
+    <Content Include="File\face17.jpg" />
+    <Content Include="File\face18.jpg" />
+    <Content Include="File\face19.jpg" />
+    <Content Include="File\face2.jpg" />
+    <Content Include="File\face20.jpg" />
+    <Content Include="File\face21.jpg" />
+    <Content Include="File\face22.jpg" />
+    <Content Include="File\face23.jpg" />
+    <Content Include="File\face24.jpg" />
+    <Content Include="File\face25.jpg" />
+    <Content Include="File\face26.jpg" />
+    <Content Include="File\face27.jpg" />
+    <Content Include="File\face3.jpg" />
+    <Content Include="File\face4.jpg" />
+    <Content Include="File\face5.jpg" />
+    <Content Include="File\face6.jpg" />
+    <Content Include="File\face7.jpg" />
+    <Content Include="File\face8.jpg" />
+    <Content Include="File\face9.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <EntityDeploy Include="Models\SelfStudyRoom.edmx">
@@ -420,10 +447,17 @@
     <Content Include="Views\UserInfo\Edit.cshtml" />
     <Content Include="Views\UserInfo\UpdatePassword.cshtml" />
     <Content Include="Views\StuRoom\Edit.cshtml" />
+    <Content Include="Views\Seat\HistoryManage.cshtml" />
+    <Content Include="Views\Admin\UserInfoManage.cshtml" />
+    <Content Include="Views\Admin\UserInfoDetail.cshtml" />
+    <Content Include="Views\Admin\Manage.cshtml" />
+    <Content Include="Views\Admin\Add.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
+    <Content Include="Views\Admin\UpdatePassword.cshtml" />
+    <Content Include="Views\Admin\SelfEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="File\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

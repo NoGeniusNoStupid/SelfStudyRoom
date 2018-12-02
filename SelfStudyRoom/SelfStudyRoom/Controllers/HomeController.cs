@@ -64,6 +64,7 @@ namespace SelfStudyRoom.Controllers
             UserInfo userInfo = new UserInfo();
             userInfo.StuNo = Account;
             userInfo.Password = password;
+            //设置账户
             if (accountType == 1)
             {
                 userInfo.Email = Account;
@@ -71,6 +72,11 @@ namespace SelfStudyRoom.Controllers
             else
                 userInfo.Tel = Account;
 
+            //随机生成照片
+            Random rd = new Random();
+            int num = rd.Next(1, 28);
+            userInfo.Image = string.Format("/File/face{0}.jpg", num);
+            userInfo.Name = "匿名";
             userInfo.RegTime = DateTime.Now;
 
 

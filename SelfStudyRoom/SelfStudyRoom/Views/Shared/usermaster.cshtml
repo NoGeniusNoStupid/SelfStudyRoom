@@ -44,8 +44,8 @@
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo" href="index.html"><img src="/Content/Admin/images/logo.svg" alt="logo" /></a>
-                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="/Content/Admin/images/logo-mini.svg" alt="logo" /></a>
+                <a class="navbar-brand brand-logo" href="/UserInfo/Index"><img src="/Content/Admin/images/logo.svg" alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" href="/UserInfo/Index"><img src="/Content/Admin/images/logo-mini.svg" alt="logo" /></a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-stretch">
 
@@ -53,15 +53,7 @@
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                             <div class="nav-profile-img">
-                                @if (userInfo.Image != null)
-                                {
-                                      <img src="@userInfo.Image" alt="image">
-                                }
-                                else
-                                {
-                                      <img src="/Content/Admin/images/faces/face1.jpg" alt="image">
-                                }
-                             
+                                <img src="@userInfo.Image" alt="image">
                                 <span class="availability-status online"></span>
                             </div>
                             <div class="nav-profile-text">
@@ -106,14 +98,7 @@
                     <li class="nav-item nav-profile">
                         <a href="#" class="nav-link">
                             <div class="nav-profile-image">
-                                @if (userInfo.Image != null)
-                                {
-                                    <img src="@userInfo.Image" alt="image">
-                                }
-                                else
-                                {
-                                    <img src="/Content/Admin/images/faces/face1.jpg" alt="profile">
-                                }
+                                <img src="@userInfo.Image" alt="image">
                               
                                 <span class="login-status online"></span> <!--change to offline or busy as needed-->
                             </div>

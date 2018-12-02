@@ -11,13 +11,7 @@ namespace SelfStudyRoom.Controllers
 {
     public class StuRoomController : PowerController
     {
-        //
-        // GET: /StuRoom/
-
-        public ActionResult Index()
-        {
-            return View();
-        }
+       
         //添加自习室
         public ActionResult Add()
         {
@@ -47,25 +41,23 @@ namespace SelfStudyRoom.Controllers
 
             return RedirectToAction("Manage");
         }
-        //列表
+        //自习室管理
         public ActionResult Manage(string search)
         {
             //计算空余座位
             SetEmptySeat();
-
-
             //分页设置
             int pageIndex = Request.QueryString["pageIndex"] != null ? int.Parse(Request.QueryString["pageIndex"]) : 1;
-            int pageSize = 15;//页面记录数
+            int pageSize = 6;//页面记录数
             List<StuRoom> mlist = new List<StuRoom>();
             //查询记录
             if (string.IsNullOrEmpty(search))
             {
-                mlist = Entity.StuRoom.Where(a => true).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<StuRoom>();
+                mlist = Entity.StuRoom.Where(a => true).OrderBy(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<StuRoom>();
             }
             else
             {
-                mlist = Entity.StuRoom.Where(a => a.Name.Contains(search)).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<StuRoom>();
+                mlist = Entity.StuRoom.Where(a => a.Name.Contains(search)).OrderBy(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<StuRoom>();
             }
             int listCount = Entity.StuRoom.Where(a => true).Count();
             //生成导航条
@@ -88,20 +80,68 @@ namespace SelfStudyRoom.Controllers
             }
             Entity.SaveChanges();
         }
-
         //展示修改页面
         public ActionResult Edit(int id)
         {
-            var stuRoom = Entity.StuRoom.FirstOrDefault(a => a.Id == id); ;
+            var stuRoom = Entity.StuRoom.FirstOrDefault(a => a.Id == id); 
             return View(stuRoom);
         }
         //修改页面
         [HttpPost]
-        public ActionResult Edit(StuRoom room)
+        public ActionResult Edit(StuRoom room,int id)
         {
             Entity.Entry(room).State = EntityState.Modified;
             Entity.SaveChanges();
 
+            return RedirectToAction("Manage");
+        }
+        //停用和恢复
+        public ActionResult SetState(int id)
+        {
+            var stuRoomTmep = Entity.StuRoom.FirstOrDefault(a => a.Id == id); //获取记录
+
+            var seatlist = Entity.Seat.Where(a => a.RoomId == stuRoomTmep.Id).ToList();
+            //停用
+            if (stuRoomTmep.State == "正常")
+            {
+
+                foreach (var seat in seatlist)
+                {
+                    if (seat.SeatDetail != null && seat.SeatDetail.Count > 0)
+                    {
+                        var seatDetailList = seat.SeatDetail.Where(a => a.State == "保留" || a.State == "正常").ToList();
+                        foreach (var seatDetail in seatDetailList)
+                        {
+                            //更新详细信息
+                            seatDetail.EndTime = DateTime.Now;
+                            seatDetail.State = "离座";
+                            Entity.Entry(seatDetail).State = EntityState.Modified;
+                        }
+                    }
+                    //更新座位状态
+                    seat.State = "停用";
+                    seat.SaveTime = null;
+                    Entity.Entry(seat).State = EntityState.Modified;
+                }
+                //更新自习室
+                stuRoomTmep.State = "停用";
+                Entity.Entry(stuRoomTmep).State = EntityState.Modified;
+            }
+            else
+            //正常
+            {
+                //更新座位
+                foreach (var seat in seatlist)
+                {
+                    seat.State = "空闲";
+                    Entity.Entry(seat).State = EntityState.Modified;
+                }
+                //更新自习室
+                stuRoomTmep.State = "正常";
+                Entity.Entry(stuRoomTmep).State = EntityState.Modified;
+            }
+            //更新记录
+            Entity.SaveChanges();
             return RedirectToAction("Manage");
         }
         //删除

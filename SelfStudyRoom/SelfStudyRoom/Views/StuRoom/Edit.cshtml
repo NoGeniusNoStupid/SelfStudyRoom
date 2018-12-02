@@ -53,6 +53,7 @@
                                 <input type="hidden" name="SeatNum" value="@Model.SeatNum" />
                                 <input type="hidden" name="Empty_Seat" value="@Model.Empty_Seat" />
                                 <input type="hidden" name="AddTime" value="@Model.AddTime" />
+                                <input type="hidden" name="State" value="@Model.State" />
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword4">地址</label>
@@ -79,7 +80,7 @@
                                 <label for="exampleTextarea1">详细介绍</label>
                                 <textarea class="form-control" id="Detail" name="Detail" rows="4">@Model.Detail</textarea>
                             </div>
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <label for="exampleSelectGender">状态</label>
                                 <select class="form-control" id="State" name="State">
                                     @if (Model.State == "正常")
@@ -93,7 +94,7 @@
                                         <option value="暂停开发" selected="selected">暂停开发</option>
                                     }
                                 </select>
-                            </div>
+                            </div>*@
                             <div style="float:right">
                                 <button type="button" onclick="addForm()" class="btn btn-gradient-primary mr-2">修改</button>
                             </div>

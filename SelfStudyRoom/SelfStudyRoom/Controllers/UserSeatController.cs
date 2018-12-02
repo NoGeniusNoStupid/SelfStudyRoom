@@ -17,7 +17,6 @@ namespace SelfStudyRoom.Controllers
             //设置保留座位的状态
             SetSeatState();
 
-
             //分页设置
             int pageIndex = Request.QueryString["pageIndex"] != null ? int.Parse(Request.QueryString["pageIndex"]) : 1;
             search = Request.QueryString["search"] != null ? Request.QueryString["search"].ToString() : search;
@@ -34,11 +33,11 @@ namespace SelfStudyRoom.Controllers
             //查询记录
             if (string.IsNullOrEmpty(search))
             {
-                mlist = Entity.Seat.Where(a => true).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<Seat>();
+                mlist = Entity.Seat.Where(a => true).OrderBy(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<Seat>();
             }
             else
             {
-                mlist = Entity.Seat.Where(a => a.StuRoom.Name.Contains(search)).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<Seat>();
+                mlist = Entity.Seat.Where(a => a.StuRoom.Name.Contains(search)).OrderBy(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<Seat>();
             }
 
 
@@ -52,7 +51,6 @@ namespace SelfStudyRoom.Controllers
             ViewData["search"] = search;
             return View();
         }
-
         //快速就坐
         public ActionResult OrderSeat(int id, int other)
         {
@@ -69,7 +67,6 @@ namespace SelfStudyRoom.Controllers
             seat.State = "使用中";
             Entity.Entry(seat).State = EntityState.Modified;
 
-            
             SeatDetail seatDetail = new SeatDetail();
             seatDetail.SeatId = id;
             seatDetail.UserId = userId;
@@ -79,8 +76,7 @@ namespace SelfStudyRoom.Controllers
 
             string msg = string.Format("就坐成功！{0}自习室{1}号座位， 开始时间{2}。", seat.StuRoom.Name, seat.Id, seatDetail.StartTime);
             return RedirectDialogToAction("OrderHistory", "UserSeat", msg,Entity.SaveChanges());
-        }
-       
+        } 
         //查看就坐记录
         public ActionResult OrderHistory()
         {
@@ -141,6 +137,8 @@ namespace SelfStudyRoom.Controllers
             seatDetail.Seat.SaveTime = null;
             Entity.Entry(seatDetail.Seat).State = EntityState.Modified;
             Entity.SaveChanges();
+
+
             return RedirectToAction("OrderHistory");  
         }
         // 设置保留座位的状态
