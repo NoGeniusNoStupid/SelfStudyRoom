@@ -23,6 +23,13 @@ namespace SelfStudyRoom.Controllers
             int userId = Convert.ToInt32(Session["UserId"]);
             var UserInfo = Entity.UserInfo.FirstOrDefault(a => a.Id == userId);
             ViewData["UserInfo"] = UserInfo;
+
+            //学习状态
+            var seatDetail = Entity.SeatDetail.FirstOrDefault(a => a.UserId == UserInfo.Id && a.State == "正常");
+            if (seatDetail == null)
+                ViewData["State"] = "未就座";
+            else
+                ViewData["State"] = "学习中";
         }
     }
 }

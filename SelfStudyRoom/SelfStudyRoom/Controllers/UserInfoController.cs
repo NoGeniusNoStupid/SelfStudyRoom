@@ -1,8 +1,10 @@
 ﻿using SelfStudyRoom.Models;
+using SelfStudyRoom.Public;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
@@ -15,10 +17,64 @@ namespace SelfStudyRoom.Controllers
         public ActionResult Index()
         {
             int userId = Convert.ToInt32(Session["UserId"]);
-            var userInfo = Entity.UserInfo.FirstOrDefault(a => a.Id == userId);
+            var userInfo = Entity.UserInfo.FirstOrDefault(a => a.Id == userId);      
+            //获取学习记录
+            var seatDetail = Entity.SeatDetail.Where(a => a.UserId == userId).ToList();
+            //计算总的学习时间
+            TimeSpan span =CommonTool.CalculationStudyTime(seatDetail);
+            //设置时间格式
+            StringBuilder sb = CommonTool.SetStudyTimeFormat(span);
+            ViewData["StudyTime"] = sb.ToString();
+            //计算总的学习次数
+            ViewData["Count"] = seatDetail.Count;
+            //计算排名、击败次数
+            CalculationRank(span, seatDetail.Count, userId);
             return View(userInfo);
         }
+        //计算排名、击败人数
+        private void CalculationRank(TimeSpan StudyTime, int Count,int userId)
+        {
+            //所有用户的学习时间
+            List<TimeSpan> spanList = new List<TimeSpan>();
+            //所有用户的学习次数
+            List<int> countList = new List<int>();
+            //记录每个用户的学习时间
+            TimeSpan spanTemp = new TimeSpan();
+            //获取所有用户
+            var userList = Entity.UserInfo.Where(a => true).ToList();
+            foreach (var item in userList)
+            {
+                //获取每个用户的学习记录
+                var seatDetail = Entity.SeatDetail.Where(a => a.UserId == item.Id).ToList();
+                //计算每个用户的学习时间
+                if (userId == item.Id)
+                    spanTemp = StudyTime;
+                else
+                    spanTemp = CommonTool.CalculationStudyTime(seatDetail);
+                //记录每个有用户的学习时间和次数
+                spanList.Add(spanTemp);
+                countList.Add(seatDetail.Count);
+            }
+           //顺序排序
+            spanList.Sort();
+            countList.Sort();
+            //倒序排序
+            countList.Reverse();
+            spanList.Reverse();
+            int selfSpanRank = spanList.IndexOf(StudyTime) + 1;
+            int selfCountRank = countList.IndexOf(Count) + 1;
+            ViewData["SpanRank"] = selfSpanRank;//时间排名
+            ViewData["CountRank"] = selfCountRank;//次数排名
 
+            //时间击败百分比
+            double spanPercent = Convert.ToDouble(selfSpanRank) / Convert.ToDouble(spanList.Count);
+            ViewData["SpanPercent"] = string.Format("{0:0.00%}", 1 - spanPercent);
+            //次数击败百分比
+            double countPercent = Convert.ToDouble(selfCountRank) / Convert.ToDouble(countList.Count);
+            ViewData["CountPercent"] = string.Format("{0:0.00%}", 1 - countPercent);
+            //次数击败%
+            ViewData["Rank"] = countList.Count - selfCountRank; //排名击败人数
+        }  
         //展示完善个人资料页面
         public ActionResult Edit()
         {

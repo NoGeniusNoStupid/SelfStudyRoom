@@ -40,8 +40,8 @@
                         自习室使用累计时长
                         <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">2天1小时20分钟</h2>
-                    <h6 class="card-text">击败 60% 用户</h6>
+                    <h2 class="mb-5">@ViewData["StudyTime"]</h2>
+                    <h6 class="card-text">击败 @ViewData["SpanPercent"] 用户</h6>
                 </div>
             </div>
         </div>
@@ -53,8 +53,8 @@
                         自习室使用累计次数
                         <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">45,6334</h2>
-                    <h6 class="card-text">击败 10% 用户</h6>
+                    <h2 class="mb-5">@ViewData["Count"]</h2>
+                    <h6 class="card-text">击败 @ViewData["CountPercent"] 用户</h6>
                 </div>
             </div>
         </div>
@@ -66,8 +66,8 @@
                        学习排行
                         <i class="mdi mdi-diamond mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">第1名</h2>
-                    <h6 class="card-text">击败 5 名用户</h6>
+                    <h2 class="mb-5">第 @ViewData["SpanRank"]名</h2>
+                    <h6 class="card-text">击败 @ViewData["Rank"] 名用户</h6>
                 </div>
             </div>
         </div>

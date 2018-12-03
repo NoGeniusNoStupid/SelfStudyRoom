@@ -99,12 +99,20 @@
                         <a href="#" class="nav-link">
                             <div class="nav-profile-image">
                                 <img src="@userInfo.Image" alt="image">
+                                <span class="font-weight-bold mb-2">@userInfo.Name</span>
                               
                                 <span class="login-status online"></span> <!--change to offline or busy as needed-->
                             </div>
                             <div class="nav-profile-text d-flex flex-column">
-                                <span class="font-weight-bold mb-2">@userInfo.Name</span>
-                                <span class="text-secondary text-small">普通用户</span>
+                                @*<span class="font-weight-bold mb-2">@userInfo.Name</span>*@
+                                @if (ViewData["State"].ToString() == "未就座")
+                                {
+                                    <span class="badge badge-gradient-success">@ViewData["State"]</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-gradient-danger">@ViewData["State"]</span>
+                                }     
                             </div>
                             <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                         </a>
@@ -115,21 +123,6 @@
                             <i class="mdi mdi-home menu-icon"></i>
                         </a>
                     </li>
-
-
-                    @*<li class="nav-item">
-                            <a class="nav-link" href="pages/forms/basic_elements.html">
-                                <span class="menu-title">Forms</span>
-                                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-                            </a>
-                        </li>*@
-                    @*<li class="nav-item">
-                            <a class="nav-link" href="pages/charts/chartjs.html">
-                                <span class="menu-title">Charts</span>
-                                <i class="mdi mdi-chart-bar menu-icon"></i>
-                            </a>
-                        </li>*@
-                   
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
                             <span class="menu-title">个人信息管理</span>

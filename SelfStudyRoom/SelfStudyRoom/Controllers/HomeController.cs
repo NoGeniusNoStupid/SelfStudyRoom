@@ -59,7 +59,6 @@ namespace SelfStudyRoom.Controllers
             {
                 return RedirectDialogToAction("Register", "Home", "该账号已被注册，请更换手机或邮箱号");
             }
-
             //对象赋值
             UserInfo userInfo = new UserInfo();
             userInfo.StuNo = Account;
@@ -78,14 +77,15 @@ namespace SelfStudyRoom.Controllers
             userInfo.Image = string.Format("/File/face{0}.jpg", num);
             userInfo.Name = "匿名";
             userInfo.RegTime = DateTime.Now;
-
-
             //保存
             Entity.UserInfo.Add(userInfo);
             if (Entity.SaveChanges() > 0)
-              return RedirectToAction("Index", "UserInfo"); 
+            {
+                Session["UserId"]=userInfo.Id;
+                return RedirectToAction("Index", "UserInfo"); 
+            }
             else
-              return RedirectDialogToAction("Register", "Home", "注册失败");
+                return RedirectDialogToAction("Register", "Home", "注册失败");
         }
         #endregion
         
