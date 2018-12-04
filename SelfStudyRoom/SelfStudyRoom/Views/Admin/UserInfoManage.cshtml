@@ -8,15 +8,8 @@
         <h3 class="page-title">
             用户管理
         </h3>
-        @*<nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/Seat/Manage">座位管理</a></li>
-                <li class="breadcrumb-item active" aria-current="page">就座记录</li>
-            </ol>
-        </nav>*@
     </div>
     <div class="row">
-
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -67,9 +60,16 @@
 
                             @{
                                 List<SelfStudyRoom.Models.UserInfo> mlist = (List<SelfStudyRoom.Models.UserInfo>)ViewData["List"];
-
+                                string state=string.Empty;
+                                
                                 foreach (var item in mlist)
                                 {
+                                    
+                                    var seatDetail = item.SeatDetail.FirstOrDefault(a =>  a.State == "正常");
+                                    if (seatDetail == null)
+                                    {  state = "未就座";}
+                                    else
+                                    { state = "学习中";}
                                     <tr>
                                         <td>
                                             <img src="@item.Image" class="mr-2" alt="image">
@@ -79,7 +79,9 @@
                                         <td>@item.Sex</td>
                                         <td>@item.Grade</td>
                                         <td>@item.Tel</td>
-                                        <td>@item.Tel</td>
+                                        
+                                        <td>@state</td>
+
                                         <td>@item.RegTime</td>
                                         <td>
                                             <a href="/Admin/UserInfoDetail/@item.Id" class="badge badge-gradient-success">详细</a>
@@ -91,9 +93,6 @@
                             }
                         </tbody>
                     </table>
-
-
-
                     <div style="float:right">@Html.Raw(ViewData["Bar"])</div>
                 </div>
             </div>

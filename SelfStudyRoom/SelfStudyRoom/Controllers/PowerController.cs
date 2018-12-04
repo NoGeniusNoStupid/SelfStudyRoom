@@ -22,6 +22,7 @@ namespace SelfStudyRoom.Controllers
             {
                 string msg = "请先登录，再进行操作！";
                 filterContext.Result = RedirectDialogToAction("Login", "Home", msg);
+                return;
             }
             int adminId = Convert.ToInt32(Session["AdminId"]);
             var adminInfo = Entity.Admin.FirstOrDefault(a => a.Id == adminId);

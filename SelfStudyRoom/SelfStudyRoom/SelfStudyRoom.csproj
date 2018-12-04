@@ -180,6 +180,7 @@
     <Compile Include="Public\CommonTool.cs" />
     <Compile Include="Public\MyExceptionAttribute.cs" />
     <Compile Include="Public\PageBarHelper.cs" />
+    <Compile Include="Public\Study.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin\css\style.css" />

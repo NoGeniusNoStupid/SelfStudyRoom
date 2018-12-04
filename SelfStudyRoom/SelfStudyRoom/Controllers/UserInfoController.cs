@@ -122,8 +122,6 @@ namespace SelfStudyRoom.Controllers
             Session["UserId"] = null;
             return RedirectToAction("Login", "Home");
         }
-
-
         /// <summary>
         /// 保存图片
         /// </summary>

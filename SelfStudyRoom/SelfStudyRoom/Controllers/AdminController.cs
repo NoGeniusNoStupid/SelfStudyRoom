@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
@@ -19,7 +20,65 @@ namespace SelfStudyRoom.Controllers
         //管理员主页
         public ActionResult Index()
         {
+        
+            //获取学习记录
+            var seatDetail = Entity.SeatDetail.Where(a => true).ToList();
+            //计算总的学习时间
+            TimeSpan span = CommonTool.CalculationStudyTime(seatDetail);
+            //设置时间格式
+            StringBuilder sb = CommonTool.SetStudyTimeFormat(span);
+            ViewData["StudyTime"] = sb.ToString();
+            //计算总的学习次数
+            ViewData["Count"] = seatDetail.Count;
+            //获取第一名
+            CalculationRank();
             return View();
+        }
+        //计算第一名
+        private void CalculationRank()
+        {
+            //统计学习记录
+            List<Study> studyList = new List<Study>();
+            //设置分页
+            int pageIndex = Request.QueryString["pageIndex"] != null ? int.Parse(Request.QueryString["pageIndex"]) : 1;
+            int pageSize = 2;//页面记录数
+
+            //获取所有用户
+            var userList = Entity.UserInfo.Where(a => true).ToList();
+            UserInfo user=new UserInfo();
+            TimeSpan maxTimeSpan=new TimeSpan();
+            Study study = null;
+            //查询第一名
+            foreach (var item in userList)
+            {
+                study = new Study();
+                study.UserInfo = item;
+                if (item.SeatDetail != null && item.SeatDetail.Count > 0)
+                {
+                    TimeSpan span = CommonTool.CalculationStudyTime(item.SeatDetail.ToList());//获取学习时间
+                    if (span > maxTimeSpan)
+                    { 
+                        maxTimeSpan = span;
+                        user = item;
+                    }
+                    study.Count = item.SeatDetail.Count;
+                    study.TimeSpan = span;
+                    study.FormartTimeSpan = CommonTool.SetStudyTimeFormat(span).ToString();
+                }
+                studyList.Add(study);
+            }
+            ViewData["UserName"] = user.Name;
+            StringBuilder sb = CommonTool.SetStudyTimeFormat(maxTimeSpan);
+            ViewData["MaxTimeSpan"] = sb.ToString();
+            ViewData["MaxCount"] = user.SeatDetail.Count;
+
+            //生成导航条
+            string strBar = PageBarHelper.GetPagaBar(pageIndex, studyList.Count, pageSize);
+            //设置每页展示指定的记录
+            studyList = studyList.Where(a => true).OrderBy(a => a.UserInfo.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<Study>();
+ 
+            ViewData["List"] = studyList;
+            ViewData["Bar"] = strBar;
         }
         //退出
         public ActionResult Out()
@@ -100,9 +159,6 @@ namespace SelfStudyRoom.Controllers
             Entity.SaveChanges();
             return RedirectToAction("Manage");
         }
-        
-
-
         //修改密码
         public ActionResult UpdatePassword()
         {
@@ -120,7 +176,6 @@ namespace SelfStudyRoom.Controllers
             adminInfo.AdminPwd = NowPwd;
             return RedirectDialogToAction("Index", "Admin", "密码修改成功！", Entity.SaveChanges());
         }
-
         //删除
         public ActionResult Delete(int id)
         {
