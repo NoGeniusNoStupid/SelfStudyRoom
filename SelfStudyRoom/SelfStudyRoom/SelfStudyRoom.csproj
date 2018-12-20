@@ -406,6 +406,7 @@
     <Content Include="Content\Admin\vendors\iconfonts\mdi\scss\_icons.scss" />
     <Content Include="Content\Admin\vendors\iconfonts\mdi\scss\_path.scss" />
     <Content Include="Content\Admin\vendors\iconfonts\mdi\scss\_variables.scss" />
+    <None Include="Properties\PublishProfiles\SelfStudyRoom.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />

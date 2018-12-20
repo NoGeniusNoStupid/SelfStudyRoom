@@ -157,7 +157,8 @@ namespace SelfStudyRoom.Controllers
 
             Entity.Entry(admin).State = EntityState.Modified;
             Entity.SaveChanges();
-            return RedirectToAction("Manage");
+            
+            return RedirectToAction("Index");
         }
         //修改密码
         public ActionResult UpdatePassword()
